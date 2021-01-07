@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <title>Usuario</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Loading Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+
+
+    <!--Agregar esto-->
+    <link rel="stylesheet" href="css/style-nav.css">
+    <link rel="stylesheet" href="css/style-medicamento.css">
+    <!--fin Agregar esto-->
+</head>
+
+<body>
+    <!--inicio navbar horizontal-->
+    <nav class="navbar navbar-dark fixed-top bg-custom flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">SINARS - Bienvenida Julianne Moore</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="index.html">Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light pt-4 sidebar collapse">
+        <div class="sidebar-sticky pt-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="main.html">
+                        
+                        <h4>Home</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="examenes.html">
+                        
+                        <h4>Exámenes</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="medicamento.html">
+                        
+                        <h4>Medicamentos</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="calendario.html">
+                        
+                        <h4>Calendario</h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--fin navbar horizontal-->
+
+
+    <div class="col-md-10 ml-auto">
+        <!-- Aqui va tu codigo -->
+        <header>
+            <div id="header">
+                <h3 style="text-align: center;">Medicamentos y dosis</h3>
+                <h4 style="text-align: center;">Sra. Julianne Moore</h4>
+            </div>
+        </header>
+        <div id="contenido_medicamentos">
+            <div id="tabla">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Medicamento</th>
+                            <th>Horario</th>
+                            <th>Dosis</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tabla_medicamento">
+                        <tr>
+                            <td>Aspirina</td>
+                            <td>09:00</td>
+                            <td>500 mg</td>
+                        </tr>
+                        <tr>
+                            <td>Natastatina</td>
+                            <td>09:00</td>
+                            <td>20 mg</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+
+            <div id="nuevo_medicamentos">
+                <!--modal _ inicio-->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Agregar medicamento</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Nuevo medicamento</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label >Agregar medicamento</label>
+                                        <input type="text" class="form-control" id="medicamento" placeholder="Nombre medicamento">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Agregar horario</label>
+                                        <input type="text" class="form-control" id="horario" placeholder="Horario">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Agregar dosis</label>
+                                        <input type="text" class="form-control" id="dosis" placeholder="Dosis">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" onclick="nuevo_medicamento()">Guardar cambios</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--modal _ final-->
+
+            </div>
+        </div>
+        <!--fin tu codigo-->
+    </div>
+
+    <footer class="text-center" style="height: 100px; background-color: black;">
+
+        <p style="padding-top: 30px;">Full Stack Python 154-1 - Grupo 2</p>
+
+    </footer>
+
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+    <script src="js/medicamento.js"></script>
+</body>
+
+</html>

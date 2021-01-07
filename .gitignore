@@ -1,0 +1,5 @@
+.DS_Store
+venv*
+__pycache__
+.vscode*
+modulo-5_evaluacion_final.pdf
