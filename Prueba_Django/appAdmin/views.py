@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import RegistroPaciente
 from django.conf import settings
+from django.core.paginator import Paginator
 import json
 
 filename = '/appAdmin/static/data/data_registros.json'
@@ -67,20 +68,48 @@ def registro(request):
             data_post = data_post.cleaned_data
             agregar_paciente(filename, data_post, settings)
             pacientes = leer_pacientes(filename, settings)
+            page = request.GET.get('page', 1)
+
+            paginator = Paginator(pacientes, 2)
+            try:
+                users = paginator.page(page)
+            except PageNotAnInteger:
+                users = paginator.page(1)
+            except EmptyPage:
+                users = paginator.page(paginator.num_pages)
             formulario = RegistroPaciente()
-            context = {'form': formulario, 'registros': pacientes }
+            context = {'form': formulario, 'registros': users }
             print("PACIENTE AGREGADO")
             return render(request, 'appAdmin/registro.html', context=context)
         else:
             print('NO ES VALIDO')
             pacientes = leer_pacientes(filename, settings)
-            context = {'form': data_post, 'registros': pacientes }
+            page = request.GET.get('page', 1)
+
+            paginator = Paginator(pacientes, 2)
+            try:
+                users = paginator.page(page)
+            except PageNotAnInteger:
+                users = paginator.page(1)
+            except EmptyPage:
+                users = paginator.page(paginator.num_pages)
+            context = {'form': data_post, 'registros': users }
             return render(request, 'appAdmin/registro.html', context)
     else:
+        pacientes = leer_pacientes(filename, settings)
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(pacientes, 2)
+        try:
+            users = paginator.page(page)
+        except PageNotAnInteger:
+            users = paginator.page(1)
+        except EmptyPage:
+            users = paginator.page(paginator.num_pages)
+
         print("CREANDO FORMULARIO")
         formulario = RegistroPaciente()
-        pacientes = leer_pacientes(filename, settings)
-        context = {'form': formulario, 'registros': pacientes }
+        context = {'form': formulario, 'registros': users }
         return render(request, 'appAdmin/registro.html', context=context)
 
 

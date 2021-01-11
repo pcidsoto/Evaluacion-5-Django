@@ -51,6 +51,28 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% if registros.has_other_pages %}
+                <ul class="pagination">
+                    {% if registros.has_previous %}
+                        <li><a href="?page={{ registros.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in registros.paginator.page_range %}
+                        {% if registros.number == i %}
+                            <li class="active"><span>{{ i }}- <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}-</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if registros.has_next %}
+                        <li><a href="?page={{ registros.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
         </div>
     </div>
     <!-- Optional JavaScript -->
