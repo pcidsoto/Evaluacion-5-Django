@@ -11,7 +11,7 @@
     
     <div class="container">
         <div class="row">
-            <div class="col-sm-3 center">
+            <div class="col-sm-12">
                 <form action=""  method="post">
                     {% csrf_token %}
                     
@@ -21,13 +21,16 @@
                 </form>
             </div>
         </div>
+        <hr>
         <div class="row">
             <table class="col-sm-12 table">
                 <thead class="thead-dark">
                     <tr>
                     <th scope="col">#</th>
+                    <th scope="col">RUN</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
+                    <th scope="col">Edad</th>
                     <th scope="col">Fecha de Nacimiento</th>
                     <th scope="col"></th>
                     </tr>
@@ -36,11 +39,13 @@
                     {% for row in registros %}
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
+                        <td>{{row.run}}</td>
                         <td>{{row.nombre}}</td>
                         <td>{{row.apellido}}</td>
-                        <td>{{row.fecha_nacimiento}}</td>
+                        <td>{{row.edad}}</td>
+                        <td>{{row.f_nacimiento}}</td>
                         <td>
-                            <a href="{% url 'appAdmin:eliminar' row.nombre %}" type="submit" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="{% url 'appAdmin:eliminar' row.run %}" type="submit" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
                     {% endfor %}

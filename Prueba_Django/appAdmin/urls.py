@@ -5,6 +5,6 @@ app_name = 'appAdmin'
 
 urlpatterns = [
     path('registro/', views.registro, name='registro' ),
-    path('eliminar/<nombre>/', views.eliminar, name='eliminar' ),
+    path('eliminar/<run>/', views.eliminar, name='eliminar' ),
 
 ]

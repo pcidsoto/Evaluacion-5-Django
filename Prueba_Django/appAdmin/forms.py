@@ -3,6 +3,12 @@ from django import forms
 
 class RegistroPaciente(forms.Form):
 
+    run = forms.CharField(
+        label='R.U.N',
+        widget= forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder':'Número de Identificacion Nacional'})
+        )
     nombre = forms.CharField(
         label='Nombre',
         widget= forms.TextInput(attrs={
