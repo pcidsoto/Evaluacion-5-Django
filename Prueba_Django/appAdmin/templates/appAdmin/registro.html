@@ -1,84 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-    <h1>Este es un registro</h1>
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <form action=""  method="post">
-                    {% csrf_token %}
-                    
-                    {{form.as_table}}
-                    <input class="btn btn-primary" type="submit" value="Crear">
-                    
-                </form>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <table class="col-sm-12 table">
-                <thead class="thead-dark">
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">RUN</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Edad</th>
-                    <th scope="col">Fecha de Nacimiento</th>
-                    <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in registros %}
-                    <tr>
-                        <th scope="row">{{forloop.counter}}</th>
-                        <td>{{row.run}}</td>
-                        <td>{{row.nombre}}</td>
-                        <td>{{row.apellido}}</td>
-                        <td>{{row.edad}}</td>
-                        <td>{{row.f_nacimiento}}</td>
-                        <td>
-                            <a href="{% url 'appAdmin:eliminar' row.run %}" type="submit" class="btn btn-danger btn-sm">Eliminar</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% if registros.has_other_pages %}
-                <ul class="pagination">
-                    {% if registros.has_previous %}
-                        <li><a href="?page={{ registros.previous_page_number }}">&laquo;</a></li>
-                    {% else %}
-                        <li class="disabled"><span>&laquo;</span></li>
-                    {% endif %}
-                    {% for i in registros.paginator.page_range %}
-                        {% if registros.number == i %}
-                            <li class="active"><span>{{ i }}- <span class="sr-only">(current)</span></span></li>
-                        {% else %}
-                            <li><a href="?page={{ i }}">{{ i }}-</a></li>
-                        {% endif %}
-                    {% endfor %}
+{% extends 'base.html' %}
+{% load static %}
 
-                    {% if registros.has_next %}
-                        <li><a href="?page={{ registros.next_page_number }}">&raquo;</a></li>
-                    {% else %}
-                        <li class="disabled"><span>&raquo;</span></li>
-                    {% endif %}
-                </ul>
-                {% endif %}
-        </div>
+{% block titulo %}Registro de Pacientes {% endblock %}
+
+{% block nav-bar %} 
+    {{block.super}}
+{% endblock %}
+
+{% block contenido %} 
+<div class="d-flex justify-content-center">
+    <div class="col-sm-4">
+        <form action=""  method="post">
+            {% csrf_token %}
+            
+            {{form.as_table}}
+            <br>
+            <input class="btn btn-primary btn-block" type="submit" value="Crear">
+            
+        </form>
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>
+</div>
+<hr>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-md">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">RUN</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Fecha de Nacimiento</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in registros %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{row.run}}</td>
+                    <td>{{row.nombre}}</td>
+                    <td>{{row.apellido}}</td>
+                    <td>{{row.edad}}</td>
+                    <td>{{row.f_nacimiento}}</td>
+                    <td>
+                        <a href="{% url 'appAdmin:eliminar' row.run %}" type="submit" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% if registros.has_other_pages %}
+        <ul class="pagination">
+            {% if registros.has_previous %}
+                <li><a href="?page={{ registros.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in registros.paginator.page_range %}
+                {% if registros.number == i %}
+                    <li class="active"><span>{{ i }}- <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}-</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if registros.has_next %}
+                <li><a href="?page={{ registros.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+</div>
+{% endblock %}
+
+{% block footer %}
+    {{block.super}}
+{% endblock %}
