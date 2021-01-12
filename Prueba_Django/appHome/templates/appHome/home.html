@@ -4,7 +4,7 @@
 {% block titulo %} Home {% endblock %}
 
 {% block nav-bar %} 
-<nav class="navbar navbar-dark fixed-top bg-custom">
+    <nav class="navbar navbar-dark fixed-top bg-custom">
     <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Bienvenid@: {{datos.nombre}}</a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
       data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
 {% block sidebar %} {{ block.super }} {% endblock %}
 
 {% block datos-personales %}
-<div class="card mb-3">
+    <div class="card mb-3">
     <div class="row no-gutters">
         <div class="col-md-4">
             <img src="{% static 'appHome/julianne-moore.jpg' %}" class="card-img img-fluid" alt="...">
@@ -57,25 +57,27 @@
             </div>
         </div>
     </div>
-</div>
-
-
+    </div>
 {% endblock %}
 
 {% block patologias %}
-<div class="card">
+    <div class="card">
     <h2 class="card-header">Patologías Asociadas</h2>
     <div class="card-body">
         <ul>
             <li>
                 <p class="h5">Resistencia a la Insulina</p>
+                {% include 'appHome/titulo.html' with nombre='Anabelle' apellido='LaMuerta' %}
+
             </li>
             
         </ul>
     </div>
-</div>
+    </div>
 {% endblock %}
 
+
+
 {% block footer %}
-{{block.super}}
+    {{block.super}}
 {% endblock %}
