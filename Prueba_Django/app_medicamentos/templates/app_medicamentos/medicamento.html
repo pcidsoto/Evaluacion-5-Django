@@ -1,0 +1,116 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+    {% block titulo %}Medicamentos de Pacientes{% endblock %}
+
+    {%block nav-bar %}
+    {{block.super}}
+    {% endblock %}
+    
+    {% block sidebar %}
+    {{ block.super }}
+    {% endblock %}
+    
+    {% block medicamento %}
+        <!-- Aqui va tu codigo -->
+        <header>
+            <div id="header">
+                <h3 style="text-align: center;">Medicamentos y dosis</h3>
+                <h4 style="text-align: center;">{{nombre}} {{apellido}}</h4>
+                
+                {%for fecha in recetas%}
+                <p>{{fecha.fecha}}</p>
+                
+                {%for dato in fecha.medicamentos%}
+                <h5>{{dato.nombre}}</h5>
+                <h6>{{dato.hora}}</h6>
+                <h6>{{dato.dosis}}</h6>
+                
+                
+                {%endfor%}
+                {%endfor%}
+                <form method = "POST"> 
+                    {% csrf_token %}
+                    {{ seleccionar }} 
+                    <input type = "submit" value = "Ver" class="btn btn-primary btn-sm"> 
+                </form> 
+                
+            </div>
+        </header>
+        <div id="contenido_medicamentos">
+            <div id="tabla">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Medicamento</th>
+                            <th>Horario</th>
+                            <th>Dosis</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tabla_medicamento">
+                        <tr>
+                            <td>Aspirina</td>
+                            <td>09:00</td>
+                            <td>500 mg</td>
+                        </tr>
+                        <tr>
+                            <td>Natastatina</td>
+                            <td>09:00</td>
+                            <td>20 mg</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+
+            <div id="nuevo_medicamentos">
+                <!--modal _ inicio-->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Agregar medicamento</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Nuevo medicamento</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label >Agregar medicamento</label>
+                                        <input type="text" class="form-control" id="medicamento" placeholder="Nombre medicamento">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Agregar horario</label>
+                                        <input type="text" class="form-control" id="horario" placeholder="Horario">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Agregar dosis</label>
+                                        <input type="text" class="form-control" id="dosis" placeholder="Dosis">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" onclick="nuevo_medicamento()">Guardar cambios</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--modal _ final-->
+
+            </div>
+        </div>
+        <!--fin tu codigo-->
+    {% endblock %}
+
+
+   {% block footer %}  
+   {{block.super}} 
+   {% endblock %}
