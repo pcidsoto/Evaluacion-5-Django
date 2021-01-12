@@ -3,7 +3,7 @@ from .forms import Pacientes
 from django.conf import settings
 import json
 
-filename = '/appHome/static/data/data_registros.json'
+filename = '/app_home/data/data_registros.json'
 
 def get_paciente(filename, run ,settings):
     with open(str(settings.BASE_DIR)+filename, 'r') as file:
@@ -33,5 +33,5 @@ def home(request):
     else:
         pacientes = Pacientes(auto_id=False)
         context = {'pacientes':pacientes }
-        return render(request, 'appHome/home.html', context)
+        return render(request, 'app_home/home.html', context)
 
