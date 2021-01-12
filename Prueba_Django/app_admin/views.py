@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 
-filename = '/appAdmin/static/data/data_registros.json'
+filename = '/app_admin/data/data_registros.json'
 
 
 def login(request):
@@ -15,14 +15,14 @@ def login(request):
             data = login_form.cleaned_data
             if data['user'] == 'user' and data['password'] == 'pass':
 
-                return redirect('appAdmin:registro')
+                return redirect('app_admin:registro')
             else:
-                return redirect('appAdmin:login')
+                return redirect('app_admin:login')
         else:
-            return render(request, 'appAdmin/login.html',context)
+            return render(request, 'app_admin/login.html',context)
     else:
         context = {'login_form': login}
-        return render(request, 'appAdmin/login.html', context)
+        return render(request, 'app_admin/login.html', context)
 
 
 
@@ -116,7 +116,7 @@ def registro(request):
             formulario = RegistroPaciente()
             context = {'form': formulario, 'registros': users }
             print("PACIENTE AGREGADO")
-            return render(request, 'appAdmin/registro.html', context=context)
+            return render(request, 'app_admin/registro.html', context=context)
         else:
             print('NO ES VALIDO')
             pacientes = leer_pacientes(filename, settings)
@@ -130,7 +130,7 @@ def registro(request):
             except EmptyPage:
                 users = paginator.page(paginator.num_pages)
             context = {'form': data_post, 'registros': users }
-            return render(request, 'appAdmin/registro.html', context)
+            return render(request, 'app_aAdmin/registro.html', context)
     else:
         pacientes = leer_pacientes(filename, settings)
         page = request.GET.get('page', 1)
@@ -146,7 +146,7 @@ def registro(request):
         print("CREANDO FORMULARIO")
         formulario = RegistroPaciente()
         context = {'form': formulario, 'registros': registros }
-        return render(request, 'appAdmin/registro.html', context=context)
+        return render(request, 'app_admin/registro.html', context=context)
 
 
 def eliminar(request, run):
@@ -159,4 +159,4 @@ def eliminar(request, run):
 
     actualizar_archivo(filename, pacientes, settings)
     
-    return redirect('appAdmin:registro')
+    return redirect('app_admin:registro')

@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class AppadminConfig(AppConfig):
-    name = 'appAdmin'
+    name = 'app_admin'
