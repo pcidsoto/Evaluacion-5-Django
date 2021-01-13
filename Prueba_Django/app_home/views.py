@@ -3,7 +3,7 @@ from .forms import Pacientes
 from django.conf import settings
 import json
 
-filename = '/app_home/data/data_registros.json'
+filename = '/data/data_registros.json'
 
 def get_paciente(filename, run ,settings):
     with open(str(settings.BASE_DIR)+filename, 'r') as file:

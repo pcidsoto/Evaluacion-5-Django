@@ -4,7 +4,7 @@ from django.conf import settings
 from . forms import Pacientes
 
 # Create your views here.
-filename = '/app_medicamentos/data/data_registros.json'
+filename = '/data/data_registros.json'
 
 def get_medicamentos(filename, settings, run):
     with open(str(settings.BASE_DIR)+filename, 'r') as file:
