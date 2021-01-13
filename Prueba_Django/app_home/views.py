@@ -28,7 +28,7 @@ def home(request):
         print(datos_paciente)
         pacientes = Pacientes(auto_id=False)
         context = {'pacientes':pacientes, 'datos': datos_paciente}
-        return render(request, 'appHome/home.html', context)
+        return render(request, 'app_home/home.html', context)
 
     else:
         pacientes = Pacientes(auto_id=False)
