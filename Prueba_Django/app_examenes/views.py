@@ -25,6 +25,8 @@ def examenes(request):
     datos = get_examenes(filename, settings, rut)
     context = {"nombre": datos["nombre"], 
                "apellido": datos["apellido"],
+               "edad": datos["edad"],
+               "genero": datos["genero"],
                "hemograma": datos["Hemograma"],
                "perfil_lipidico": datos["perfil_lipidico"],
                "presion_arterial": datos["presion_arterial"],

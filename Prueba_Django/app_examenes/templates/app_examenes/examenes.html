@@ -6,40 +6,12 @@
 {% block navbar %} {{block.super}} {% endblock%}
 {% block sidebar %} {{block.super }} {% endblock%}
 
+
 {% block encabezado-principal %}
     <!-- Aqui va tu codigo -->
     <div class="card">
         <h3 class="card-header">{{nombre}} {{apellido}}</h3>
-        {% for elemento in perfil_lipidico %}
-        {% for clave, valor in elemento.items %}
-        <h4>{{clave}}</h4>
-        <h5>{{valor.Colesterol}}</h5>
-        <h5>{{valor.Bilirrubina}}</h5>
-        {% endfor %}
-        {% endfor %}
-
         <div class="card-body">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Información general</h4>
-                            <p class="card-text">Edad: {{edad}} años</p>
-                            <p class="card-text">Telefono: {{telefono}}</p>
-                            <p class="card-text">E-mail: {{email}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Enfermedades crónicas</h4>
-                            <p class="card-text">Diabetes</p>
-                            <p class="card-text">Hipertensión</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div id="agregar_examenes">
             <div class="row" style="padding-bottom: 1em;">
@@ -218,10 +190,109 @@
                                         <td>{{valor.Hematocrito}}</td>
                                         <td>{{valor.Hemoglobina}}</td>
                                     </tr>
+                                    {% endfor %}
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-6">
+                            <figure class="highcharts-figure">
+                                <div id="container-hemograma"></div>
+                            </figure>
+                                                    </div>
+                        <script type="application/javascript">
+Highcharts.chart('container-hemograma', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Serie de tiempo hemograma'
+    },
+    subtitle: {
+        text: 'Source: Minsal'
+    },
+    xAxis: {
+        categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Rainfall (mm)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Tokyo',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+    }, {
+        name: 'New York',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+    }, {
+        name: 'London',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }, {
+        name: 'Berlin',
+        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+    }]
+});
+                        </script>
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-plipidico" role="tabpanel" aria-labelledby="nav-plipidico-tab">
+            <!---->
+            <div class="table-responsive">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Colesterol</th>
+                                        <th>Bilirrubina</th>
+                                    </tr>
+                                </thead>
+                                {% for elemento in perfil_lipidico %}
+                                {% for clave, valor in elemento.items %}                    
+                                <tbody id="tabla_plipidico">
                                     <tr>
                                         <td>{{clave}}</td>
-                                        <td>{{valor.Hematocrito}}</td>
-                                        <td>{{valor.Hemoglobina}}</td>
+                                        <td>{{valor.Colesterol}}</td>
+                                        <td>{{valor.Bilirrubina}}</td>
                                     </tr>
                                     {% endfor %}
                                     {% endfor %}    
@@ -230,19 +301,227 @@
                         </div>
                         <div class="col-lg-6">
                             <figure class="highcharts-figure">
-                                <div id="container"></div>
+                                <div id="container-plipidico"></div>
                             </figure>
                                                     </div>
                         <script type="application/javascript">
-Highcharts.chart('container', {
+Highcharts.chart('container-plipidico', {
     chart: {
         type: 'column'
     },
     title: {
-        text: 'Monthly Average Rainfall'
+        text: 'Serie de tiempo Perfil lipidico'
     },
     subtitle: {
-        text: 'Source: WorldClimate.com'
+        text: 'Source: Minsal'
+    },
+    xAxis: {
+        categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Rainfall (mm)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Tokyo',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+    }, {
+        name: 'New York',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+    }, {
+        name: 'London',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }, {
+        name: 'Berlin',
+        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+    }]
+});
+                        </script>
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-pbioquimico" role="tabpanel" aria-labelledby="nav-pbioquimico-tab">
+            <!---->
+            <div class="table-responsive">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>PTD</th>
+                                        <th>TBR</th>
+                                    </tr>
+                                </thead>
+                                {% for elemento in perfil_bioquimico %}
+                                {% for clave, valor in elemento.items %}                    
+                                <tbody id="tabla_pbioquimico">
+                                    <tr>
+                                        <td>{{clave}}</td>
+                                        <td>{{valor.PTD}}</td>
+                                        <td>{{valor.TBR}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-6">
+                            <figure class="highcharts-figure">
+                                <div id="container-pbioquimico"></div>
+                            </figure>
+                                                    </div>
+                        <script type="application/javascript">
+Highcharts.chart('container-pbioquimico', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Serie de tiempo perfil bioquímico'
+    },
+    subtitle: {
+        text: 'Source: Minsal'
+    },
+    xAxis: {
+        categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Rainfall (mm)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Tokyo',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+    }, {
+        name: 'New York',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+    }, {
+        name: 'London',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }, {
+        name: 'Berlin',
+        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+    }]
+});
+                        </script>
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-parterial" role="tabpanel" aria-labelledby="nav-parterial-tab">
+            <!---->
+            <div class="table-responsive">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Frecuencia mañana</th>
+                                        <th>Frecuencia noche</th>
+                                    </tr>
+                                </thead>
+                                {% for elemento in presion_arterial %}
+                                {% for clave, valor in elemento.items %}                    
+                                <tbody id="tabla_parterial">
+                                    <tr>
+                                        <td>{{clave}}</td>
+                                        <td>{{valor.F_manana}}</td>
+                                        <td>{{valor.F_tarde}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-6">
+                            <figure class="highcharts-figure">
+                                <div id="container1"></div>
+                            </figure>
+                                                    </div>
+                        <script type="application/javascript">
+Highcharts.chart('container1', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Serie de tiempo presion arterial'
+    },
+    subtitle: {
+        text: 'Source: Minsal'
     },
     xAxis: {
         categories: [
@@ -306,51 +585,7 @@ Highcharts.chart('container', {
             </div>
         </div>
     </div>
-    <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-plipidico" role="tabpanel" aria-labelledby="nav-plipidico-tab">
-            <!---->
-            <div class="table-responsive">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Hematocrito</th>
-                                        <th>Hemoglobina</th>
-                                    </tr>
-                                </thead>
-                                {% for elemento in hemograma %}
-                                {% for clave, valor in elemento.items %}                    
-                                <tbody id="tabla_hemograma">
-                                    <tr>
-                                        <td>{{clave}}</td>
-                                        <td>{{valor.Hematocrito}}</td>
-                                        <td>{{valor.Hemoglobina}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{clave}}</td>
-                                        <td>{{valor.Hematocrito}}</td>
-                                        <td>{{valor.Hemoglobina}}</td>
-                                    </tr>
-                                    {% endfor %}
-                                    {% endfor %}    
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-lg-6">
-                            <figure class="highcharts-figure">
-                                <div id="container"></div>
-                            </figure>
-                                                    </div>
-<!--GRAFICO 2-->
-                    </div>
-                </div>
-                <!---->
-            </div>
-        </div>
-    </div>
+
 {% endblock %}
 
 

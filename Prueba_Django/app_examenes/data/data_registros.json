@@ -57,16 +57,16 @@
                     }],
                     "presion_arterial": [{
                         "01/01/2020": {
-                            "F.ma\u00f1ana": 138,
-                            "F.tarde": 146
+                            "F_manana": 138,
+                            "F_tarde": 146
                         },
                         "02/01/2020": {
-                            "F.ma\u00f1ana": 138,
-                            "F.tarde": 146
+                            "F_manana": 138,
+                            "F_tarde": 146
                         },
                         "03/01/2020": {
-                            "F.ma\u00f1ana": 148,
-                            "F.tarde": 156
+                            "F_manana": 148,
+                            "F_tarde": 156
                         }
                     }]
                 },
