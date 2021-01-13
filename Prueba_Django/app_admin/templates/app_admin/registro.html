@@ -1,11 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'base_admin.html' %}
 {% load static %}
 
 {% block titulo %}Registro de Pacientes {% endblock %}
 
 {% block nav-bar %} 
     {{block.super}}
-    {% block logo %} {{block.super}}: Pacientes Registrados {% endblock %}
     {% block nav-link-left %}
     <!-- 
         <li class="nav-link"> LINK2 </li>
