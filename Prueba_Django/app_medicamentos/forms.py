@@ -21,7 +21,3 @@ class Pacientes(forms.Form):
         label = False,
         widget = forms.Select(choices = pacientes, attrs={'class':'form-select'})
     )
-
-
-    #pacientes = forms.ChoiceField(choices=pacientes)
-

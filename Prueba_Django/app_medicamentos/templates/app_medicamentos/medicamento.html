@@ -71,24 +71,12 @@
                                     <span aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label >Agregar medicamento</label>
-                                        <input type="text" class="form-control" id="medicamento" placeholder="Nombre medicamento">
-                                    </div>
-                                    <div class="form-group">
-                                        <label >Agregar horario</label>
-                                        <input type="text" class="form-control" id="horario" placeholder="Horario">
-                                    </div>
-                                    <div class="form-group">
-                                        <label >Agregar dosis</label>
-                                        <input type="text" class="form-control" id="dosis" placeholder="Dosis">
-                                    </div>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    {{ add_medicamento }}
+                                    <br> 
+                                    <input type = "submit" value = "Agregar" class="btn btn-primary btn-sm"> 
                                 </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" onclick="nuevo_medicamento()">Guardar cambios</button>
                             </div>
                         </div>
                     </div>
