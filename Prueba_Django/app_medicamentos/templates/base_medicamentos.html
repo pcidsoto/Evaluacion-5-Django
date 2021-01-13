@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -17,13 +17,13 @@
     {% block nav-bar %}
             <!--inicio navbar horizontal-->
     <nav class="navbar navbar-dark fixed-top bg-custom flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">SINARS - Bienvenida Julianne Moore</a>
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">SINARS</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="index.html">Logout</a>
+                <a class="nav-link" href="{% url 'app_principal:principal' %}">Logout</a>
             </li>
         </ul>
     </nav>
@@ -38,7 +38,7 @@
                     <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link" href="{% url 'app_home:Home' %}">
                             <span data-feather="home"></span>
                             <h4>Home</h4>
                         </a>
@@ -50,13 +50,8 @@
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link active" href="{% url 'app_medicamentos:medicamentos' %}">
                             <h4>Medicamentos</h4>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <h4>Calendario</h4>
                         </a>
                         </li>
                     </ul>

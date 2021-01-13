@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -25,7 +25,7 @@
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="{% url 'app_home:Home' %}">
                                 <span data-feather="home"></span>
                                 <h4>Home</h4>
                             </a>
@@ -37,15 +37,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{% url 'app_medicamentos:medicamentos' %}">
                                 <h4>Medicamentos</h4>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <h4>Calendario</h4>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </nav>
