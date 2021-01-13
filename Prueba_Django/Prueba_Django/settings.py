@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'app_principal',
     'app_home',
     'app_medicamentos',
+    'app_admin',
 ]
 
 MIDDLEWARE = [
