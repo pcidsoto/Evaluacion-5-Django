@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_home.html' %}
 {% load static %}
 
 {% block titulo %} Home {% endblock %}
@@ -12,7 +12,7 @@
     </button>
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
-        <a class="nav-link" href="#">Logout</a>
+        <a class="nav-link" href="{% url 'app_principal:principal' %}">Logout</a>
       </li>
     </ul>
     
@@ -67,7 +67,7 @@
         <ul>
             <li>
                 <p class="h5">Resistencia a la Insulina</p>
-                {% include 'app_home/titulo.html' with nombre='Anabelle' apellido='LaMuerta' %}
+            
 
             </li>
             

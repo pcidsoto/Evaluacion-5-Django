@@ -35,7 +35,7 @@ def principal(request):
             print(usuario)
             if data['user'] == usuario['run'] and data['password'] == usuario['password']:
                 print('entró exitosamente, cambiar redirect a home')
-                return redirect('app_principal:principal')
+                return redirect('app_home:Home')
             else:
                 noticias = get_noticias(filename_noticias, settings)
                 enlaces = [
