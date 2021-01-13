@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 
-filename = '/app_admin/data/data_registros.json'
+filename = '/data/data_registros.json'
 
 
 def login(request):
