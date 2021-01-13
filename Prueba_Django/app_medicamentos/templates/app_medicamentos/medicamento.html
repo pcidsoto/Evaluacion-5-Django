@@ -18,18 +18,7 @@
             <div id="header">
                 <h3 style="text-align: center;">Medicamentos y dosis</h3>
                 <h4 style="text-align: center;">{{nombre}} {{apellido}}</h4>
-                
-                {%for fecha in recetas%}
-                <p>{{fecha.fecha}}</p>
-                
-                {%for dato in fecha.medicamentos%}
-                <h5>{{dato.nombre}}</h5>
-                <h6>{{dato.hora}}</h6>
-                <h6>{{dato.dosis}}</h6>
-                
-                
-                {%endfor%}
-                {%endfor%}
+                            
                 <form method = "POST"> 
                     {% csrf_token %}
                     {{ seleccionar }} 
@@ -46,20 +35,21 @@
                             <th>Medicamento</th>
                             <th>Horario</th>
                             <th>Dosis</th>
+                            <th>Fecha</th>
 
                         </tr>
                     </thead>
                     <tbody id="tabla_medicamento">
+                        {%for fecha in recetas%}
+                        {%for dato in fecha.medicamentos%}
                         <tr>
-                            <td>Aspirina</td>
-                            <td>09:00</td>
-                            <td>500 mg</td>
+                            <td>{{dato.nombre}}</td>
+                            <td>{{dato.hora}}</td>
+                            <td>{{dato.dosis}}</td>
+                            <td>{{fecha.fecha}}</td>
                         </tr>
-                        <tr>
-                            <td>Natastatina</td>
-                            <td>09:00</td>
-                            <td>20 mg</td>
-                        </tr>
+                        {%endfor%}
+                        {%endfor%}
                     </tbody>
                 </table>
             </div>
