@@ -5,10 +5,21 @@
 
 {% block nav-bar %} 
     {{block.super}}
+    {% block logo %} {{block.super}}: Pacientes Registrados {% endblock %}
+    {% block nav-link-left %}
+    <!-- 
+        <li class="nav-link"> LINK2 </li>
+    -->
+    {% endblock %}
 {% endblock %}
 
 {% block contenido %} 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-around">
+    <div class="col-sm-4">
+        <h2>Bienvenido: </h2>
+        <img class="img-fluid rounded d-block m-l-none" src="{% static 'img/undraw_personal_info_0okl.svg' %}"  alt="registro">
+    </div>
+   
     <div class="col-sm-4">
         <form action=""  method="post">
             {% csrf_token %}

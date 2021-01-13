@@ -1,5 +1,14 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from django.core import validators
+import datetime
 
+def validar_fecha(fecha):
+    fecha_base = datetime.datetime.strptime("01-01-1920", "%d-%m-%Y").date()
+    if fecha >= fecha_base:
+        return fecha
+    else:
+        raise ValidationError("Sólo fechas mayores o iguales a 1920")
 
 class RegistroPaciente(forms.Form):
 
@@ -7,7 +16,10 @@ class RegistroPaciente(forms.Form):
         label='R.U.N',
         widget= forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder':'Número de Identificacion Nacional'})
+            'placeholder':'9.999.999-9'},
+            ),
+        validators=[validators.MaxLengthValidator(12,'Rut Incorrecto!'),
+                validators.MinLengthValidator(11,'Rut Incorrecto')]
         )
     nombre = forms.CharField(
         label='Nombre',
@@ -25,8 +37,13 @@ class RegistroPaciente(forms.Form):
         label='Fecha de nacimiento',
         widget= forms.DateInput(attrs={
             'class': 'form-control',
-            'placeholder':'Año-Mes-Dia'})
+            'type': 'date',
+            'placeholder':'Año-Mes-Dia'}
+            ),
+        validators=[validar_fecha]
         )
+
+
 
 class LoginForm(forms.Form):
 

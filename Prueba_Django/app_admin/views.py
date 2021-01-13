@@ -66,7 +66,7 @@ def leer_pacientes(filename, settings):
 # agrega un paciente al archivo seteando todo el diccionario de
 # datos.
 def agregar_paciente(filename, form_data, settings):
-    form_data['fecha_nacimiento']=form_data['fecha_nacimiento'].strftime("%Y-%m-%d")
+    form_data['fecha_nacimiento']=form_data['fecha_nacimiento'].strftime("%d-%m-%Y")
 
     run = form_data['run']
     datos_personales = {}
@@ -130,7 +130,7 @@ def registro(request):
             except EmptyPage:
                 users = paginator.page(paginator.num_pages)
             context = {'form': data_post, 'registros': users }
-            return render(request, 'app_aAdmin/registro.html', context)
+            return render(request, 'app_admin/registro.html', context)
     else:
         pacientes = leer_pacientes(filename, settings)
         page = request.GET.get('page', 1)
