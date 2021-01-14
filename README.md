@@ -13,5 +13,5 @@ En vez de usar el python manage.py runserver, levantamos el servidor con Apache,
 
 ## Grupo 3 - Full Stack Python - Awakelab
 
-nota: pacientes tienen clave inicial: 12345
-administrador es: user - pass
+### nota: pacientes tienen clave inicial: 12345
+### administrador es: user - pass
