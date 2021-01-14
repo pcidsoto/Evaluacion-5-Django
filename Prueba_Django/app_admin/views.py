@@ -79,6 +79,7 @@ def agregar_paciente(filename, form_data, settings):
     data[run] = {}
     data[run]['datos_personales'] = datos_personales
     data[run]['datos_contacto'] = {}
+    data[run]['password'] = "12345"
     data[run]['examenes'] = {}
     data[run]['examenes']['Hemograma'] = []
     data[run]['examenes']['perfil_lipidico'] = []
@@ -86,9 +87,7 @@ def agregar_paciente(filename, form_data, settings):
     data[run]['examenes']['presion_arterial'] = []
     data[run]['medicamentos'] = {}
     data[run]['medicamentos']['recetas'] = []
-    data[run]['citas'] = {}
-    data[run]['citas']['medicos'] = []
-    data[run]['citas']['examenes'] = []
+    
 
     archivo = leer_archivo(filename, settings)
     archivo['pacientes'].append(data)

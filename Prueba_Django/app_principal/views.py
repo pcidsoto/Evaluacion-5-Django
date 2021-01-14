@@ -32,9 +32,8 @@ def principal(request):
         if login_form.is_valid():
             data = login_form.cleaned_data
             usuario = get_usuario(filename_pacientes,settings, data['user'])
-            print(usuario)
-            if data['user'] == usuario['run'] and data['password'] == usuario['password']:
-                print('entró exitosamente, cambiar redirect a home')
+            if usuario and data['user'] == usuario['run'] and data['password'] == usuario['password']:
+                
                 return redirect('app_home:Home')
             else:
                 noticias = get_noticias(filename_noticias, settings)
