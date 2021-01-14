@@ -12,3 +12,6 @@ Utilizando WSGI desplegaremos nuestro proyecto.
 En vez de usar el python manage.py runserver, levantamos el servidor con Apache, virtualhost y configuramos para abrir otros puertos.
 
 ## Grupo 3 - Full Stack Python - Awakelab
+
+nota: pacientes tienen clave inicial: 12345
+administrador es: user - pass
