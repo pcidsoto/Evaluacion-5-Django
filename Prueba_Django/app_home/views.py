@@ -2,6 +2,34 @@ from django.shortcuts import render
 from .forms import Pacientes
 from django.conf import settings
 import json
+from ..app_admin.models import DatosPersonales
+from .forms import DatosPersonalesForm
+from django.views.generic import ListView
+from django.urls import reverse_lazy
+
+class Home(ListView):
+    model = DatosPersonales
+    form_class = DatosPersonalesForm
+    template_name = 'app_home/plantilla_prueba.html'
+    context_object_name = 'datos_personales'
+    success_url = reverse_lazy('app_home:prueba')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 filename = '/data/data_registros.json'
 
