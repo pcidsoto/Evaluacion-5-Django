@@ -1,14 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core import validators
-import datetime
+from .models import Administrador, DatosPersonales
 
-def validar_fecha(fecha):
-    fecha_base = datetime.datetime.strptime("01-01-1920", "%d-%m-%Y").date()
-    if fecha >= fecha_base:
-        return fecha
-    else:
-        raise ValidationError("Sólo fechas mayores o iguales a 1920")
 
 class RegistroPaciente(forms.Form):
 
@@ -27,22 +21,18 @@ class RegistroPaciente(forms.Form):
             'class': 'form-control',
             'placeholder':'Ingrese su nombre'})
         )
-    apellido = forms.CharField(
-        label='Apellido',
+    apellido_paterno = forms.CharField(
+        label='Apellido Paterno',
         widget= forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder':'Ingrese su apellido'})
         )
-    fecha_nacimiento = forms.DateField(
-        label='Fecha de nacimiento',
-        widget= forms.DateInput(attrs={
+    apellido_materno = forms.CharField(
+        label='Apellido Materno',
+        widget= forms.TextInput(attrs={
             'class': 'form-control',
-            'type': 'date',
-            'placeholder':'Año-Mes-Dia'}
-            ),
-        validators=[validar_fecha]
+            'placeholder':'Ingrese su apellido'})
         )
-
 
 
 class LoginForm(forms.Form):
@@ -62,3 +52,17 @@ class LoginForm(forms.Form):
             'placeholder':'Ingrese su contraseña'
         })
     )
+
+
+class EditarUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = DatosPersonales
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellido_paterno': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellido_materno': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            }
+        fields = ['nombre','apellido_paterno','apellido_materno','email','direccion','telefono']
