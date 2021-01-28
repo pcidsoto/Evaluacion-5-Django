@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
-import json
+from app_admin.models import Usuarios, DatosPersonales
+import json 
 
 filename = '/data/data_registros.json'
 
@@ -16,10 +17,21 @@ def leer_pacientes(filename, settings):
             lista_pacientes.append((clave,clave))
     return lista_pacientes
 
-users = leer_pacientes(filename, settings)
+users = DatosPersonales.objects.select_related('id_usuario').all().values_list('id_usuario', 'id_usuario')
 class Pacientes(forms.Form):
     pacientes = forms.CharField(
         label = False,
         widget = forms.Select(choices = users, attrs={'class':'form-select'})
     )
 
+'''class PacientesForm(forms.ModelForm):
+    class Meta:        
+        model = DatosPersonales
+        fields = ['id_usuario']
+
+        def __init__(self, *args, **kwargs):
+            super(PacientesForm, self).__init__(*args, **kwargs)
+            self.fields['id_usuario'] = forms.ModelChoiceField(
+                queryset=DatosPersonales.objects.select_related('id_usuario').all(),
+                widget=forms.Select(attrs={'class': 'form-control'}))
+            print(DatosPersonales.objects.select_related('id_usuario').all())'''
