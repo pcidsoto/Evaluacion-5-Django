@@ -12,7 +12,7 @@
     <div class="card">
         <form method = "POST"> 
             {% csrf_token %}
-            {{ seleccionar }} 
+            {{ pacientes }} 
             <input type = "submit" value = "Ver" class="btn btn-primary btn-sm"> 
         </form> 
         <h3 class="card-header">{{nombre}} {{apellido}}</h3>
