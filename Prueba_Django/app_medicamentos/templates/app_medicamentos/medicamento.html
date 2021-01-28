@@ -21,7 +21,7 @@
                             
                 <form method = "POST"> 
                     {% csrf_token %}
-                    {{ seleccionar }} 
+                    {{ pacientes }} 
                     <input type = "submit" value = "Ver" class="btn btn-primary btn-sm"> 
                 </form> 
                 
@@ -40,15 +40,14 @@
                         </tr>
                     </thead>
                     <tbody id="tabla_medicamento">
-                        {%for fecha in recetas%}
-                        {%for dato in fecha.medicamentos%}
+                        
+                        {%for dato in datos%}
                         <tr>
                             <td>{{dato.nombre}}</td>
                             <td>{{dato.hora}}</td>
                             <td>{{dato.dosis}}</td>
                             <td>{{fecha.fecha}}</td>
                         </tr>
-                        {%endfor%}
                         {%endfor%}
                     </tbody>
                 </table>
