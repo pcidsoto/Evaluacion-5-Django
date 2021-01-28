@@ -1,10 +1,31 @@
 # Create your views here.
-
-import json
 from django.shortcuts import render
 from django.conf import settings
-from . forms import Pacientes
+from django.views.generic import View
+from .forms import PacientesForm
+from app_admin.models import Hemograma, PerfilBioquimico, PerfilLipidico, PresionArterial
+import json
 
+class ExamenesView(View):
+    template_name = 'app_examenes/examenes.html'
+    form_class = PacientesForm
+    success_url = 'app_examenes:examenes'
+    
+    def get(self, request):
+        pacientes = self.form_class
+        context = {'pacientes':pacientes }
+        return render(request, self.template_name, context)       
+
+    def post(self, request):
+        run = request.POST['pacientes'] 
+        datos_paciente = DatosPersonales.objects.filter(id_usuario=run).values()
+        print(datos_paciente)
+        pacientes = self.form_class
+        context = {'pacientes':pacientes, 'datos': datos_paciente}
+        return render(request, self.template_name, context)
+
+
+'''
 # Create your views here.
 filename = '/data/data_registros.json'
 
@@ -121,3 +142,4 @@ def examenes(request):
         context = {'seleccionar': seleccionar}
         return render(request, 'app_examenes/examenes.html', context)
 
+'''
