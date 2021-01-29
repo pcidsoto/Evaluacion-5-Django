@@ -1,37 +1,60 @@
 from django import forms
 from django.conf import settings
 import json
-from app_admin.models import DatosPersonales
 
-users = list(DatosPersonales.objects.select_related('id_usuario').all().values_list('id_usuario', 'id_usuario'))
-class PacientesForm(forms.Form):
+from app_admin.models import Hemograma, DatosPersonales, PerfilLipidico
+
+
+users = DatosPersonales.objects.select_related('id_usuario').all().values_list('id_usuario', 'id_usuario')
+
+class PacientesFormSelect(forms.Form):
     pacientes = forms.CharField(
         label = False,
         widget = forms.Select(choices = users, attrs={'class':'form-select'})
     )
 
 
+class HemogramaForm(forms.ModelForm):
+    class Meta:
+        model = Hemograma
+        widgets = {
+                'id_usuario': forms.Select(attrs={'class':'form-control'}),
+                'fecha': forms.DateInput(attrs={'class': 'form-control','type':'date'}),
+                'hematocrito': forms.NumberInput(attrs={'class': 'form-control'}),
+                'hemoglobina': forms.NumberInput(attrs={'class': 'form-control'}),
+                'rcto_eritrocitos': forms.NumberInput(attrs={'class': 'form-control'}),
+                'rcto_leucocitos': forms.NumberInput(attrs={'class': 'form-control'}),
+                'rcto_plaquetas': forms.NumberInput(attrs={'class': 'form-control'}),
+                'v_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
+                'h_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
+                'c_h_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
+                'r_d_w_c_v': forms.NumberInput(attrs={'class': 'form-control'}),
+                'serie_roja': forms.TextInput(attrs={'class': 'form-control'}),
+                'serie_blanca': forms.TextInput(attrs={'class': 'form-control'}),
+                'plaquetas': forms.TextInput(attrs={'class': 'form-control'}),
+                }
+        fields = '__all__'
+        
+class PerfilLipidicoForm(forms.ModelForm):
+    class Meta:
+        model = PerfilLipidico
+        widgets = {
+                'id_usuario': forms.Select(attrs={'class':'form-control'}),
+                'fecha': forms.DateInput(attrs={'class': 'form-control','type':'date'}),
+                'hematocrito': forms.NumberInput(attrs={'class': 'form-control'}),
+                'hemoglobina': forms.NumberInput(attrs={'class': 'form-control'}),
+                'rcto_eritrocitos': forms.NumberInput(attrs={'class': 'form-control'}),
+                'rcto_leucocitos': forms.NumberInput(attrs={'class': 'form-control'}),
+                'rcto_plaquetas': forms.NumberInput(attrs={'class': 'form-control'}),
+                'v_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
+                'h_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
+                'c_h_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
+                'r_d_w_c_v': forms.NumberInput(attrs={'class': 'form-control'}),
+                'serie_roja': forms.TextInput(attrs={'class': 'form-control'}),
+                'serie_blanca': forms.TextInput(attrs={'class': 'form-control'}),
+                'plaquetas': forms.TextInput(attrs={'class': 'form-control'}),
+                }
+        fields = '__all__'
 
 
 
-'''
-filename = '/data/data_registros.json'
-def get_pacientes(filename, settings):
-    with open(str(settings.BASE_DIR)+filename, 'r') as file:
-        pacientes=json.load(file)
-    lista_pacientes=[['--', '--']]
-
-    for elemento in pacientes['pacientes']:
-        for clave in elemento.keys():
-            lista_pacientes.append((clave,clave))
-            
-    return lista_pacientes
-
-pacientes = get_pacientes(filename, settings)
-
-class Pacientes(forms.Form):
-    pacientes = forms.CharField(
-        label = False,
-        widget = forms.Select(choices = pacientes, attrs={'class':'form-select'})
-    )
-'''

@@ -1,0 +1,73 @@
+{% extends 'base_examenes.html' %}
+{% load static %}
+
+{% block titulo %}Examenes{% endblock %}
+
+{% block navbar %} {{block.super}} {% endblock%}
+{% block sidebar %} {{block.super }} {% endblock%}
+
+
+{% block encabezado-principal %}
+    <!-- Aqui va tu codigo -->
+   <div>
+       <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {{pk}}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form.id_usuario.label_tag }}
+                    {{ form.id_usuario }}
+                    {{ form.id_usuario.errors|linebreaks }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.fecha.label_tag }}
+                    {{ form.fecha }}
+                    {{ form.fecha.errors|linebreaks }}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form.glicemia.label_tag }}
+                    {{ form.glicemia }}
+                    {{ form.glicemia.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.hdl_colesterol.label_tag }}
+                    {{ form.hdl_colesterol }}
+                    {{ form.hdl_colesterol.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.ldl_colesterol.label_tag }}
+                    {{ form.ldl_colesterol }}
+                    {{ form.ldl_colesterol.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.colesterol_total.label_tag }}
+                    {{ form.colesterol_total }}
+                    {{ form.colesterol_total.errors|linebreaks }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form.trigliceridos.label_tag }}
+                    {{ form.trigliceridos }}
+                    {{ form.trigliceridos.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.colesterol_total_hdl.label_tag }}
+                    {{ form.colesterol_total_hdl }}
+                    {{ form.colesterol_total_hdl.errors|linebreaks }}
+                </div>
+            </div>
+            <br>
+            <input class="btn btn-success"  type="submit" value="Agregar" > 
+        </div>
+       </form>
+   </div>
+
+{% endblock %}
+
+
+{% block footer %} {{block.super}} {% endblock %}
