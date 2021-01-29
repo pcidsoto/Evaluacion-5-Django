@@ -1,9 +1,12 @@
 import json
 from django.shortcuts import render
 from django.conf import settings
+from django.urls import reverse_lazy
 from django.views.generic import View
-from . forms import PacientesForm
-from app_admin.models import Medicamento
+from django.views.generic.edit import CreateView
+from . forms import PacientesForm, AgregarForm
+from app_admin.models import Medicamento, DatosPersonales
+
 
 class MedicamentoView(View):
     template_name = 'app_medicamentos/medicamento.html'
@@ -22,6 +25,16 @@ class MedicamentoView(View):
         pacientes = self.form_class
         context = {'pacientes':pacientes, 'datos': datos_paciente}
         return render(request, self.template_name, context)
+
+
+class AgregarMedicamento(CreateView):
+    model = Medicamento
+    form_class = AgregarForm
+    template_name = 'app_medicamentos/agregar_medicamento.html'
+    success_url = reverse_lazy('app_medicamentos:medicamentos')
+
+    
+
 
 
 

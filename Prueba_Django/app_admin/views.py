@@ -1,161 +1,97 @@
 from django.shortcuts import render, redirect
-from .forms import RegistroPaciente, LoginForm
-from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import json
+from django.db import IntegrityError
+from django.views.generic import View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib import messages
+from .models import Administrador, Usuarios, DatosPersonales
+from .forms import RegistroPaciente, LoginForm, EditarUsuarioForm
 
-filename = '/data/data_registros.json'
 
+class Login(View):
+    form_class = LoginForm
+    template_name = "app_admin/login.html"
+    success_url = 'app_admin:registro'
 
-def login(request):
-    login = LoginForm()
-    if request.method == 'POST':    
-        login_form = LoginForm(request.POST)
-        if login_form.is_valid():
-            data = login_form.cleaned_data
-            if data['user'] == 'user' and data['password'] == 'pass':
+    def get(self, request):
+        formulario = self.form_class
+        context = {'form': formulario}
+        return render(request, self.template_name, context)
 
-                return redirect('app_admin:registro')
+    def post(self, request):
+        formulario = self.form_class(request.POST) 
+        if formulario.is_valid():
+            form_data = formulario.cleaned_data
+            login_user = Administrador.objects.filter(usuario=form_data['user']).values_list()
+            if not login_user:
+                messages.success(request, 'Usuario o Contraseña Incorrecta')
+                context = {'form': formulario}
+                return render(request, 'app_admin/login.html', context)
+
+            if form_data['user']==login_user[0][0] and form_data['password']==login_user[0][1]:
+                return redirect(self.success_url)
             else:
-                return redirect('app_admin:login')
-        else:
-            return render(request, 'app_admin/login.html',context)
-    else:
-        context = {'login_form': login}
-        return render(request, 'app_admin/login.html', context)
+                messages.success(request, 'Usuario o Contraseña Incorrecta')
+                context = {'form': formulario}
+                return render(request, 'app_admin/login.html', context)
 
 
+class Registro(CreateView):
+    model = DatosPersonales
+    form_class = RegistroPaciente
+    template_name = 'app_admin/registro.html'
+    success_url = 'app_admin:registro'
 
-
-
-
-
-
-
-
-#lee todo el archivo y devuelve un diccionario
-def leer_archivo(filename, settings):
-    with open(str(settings.BASE_DIR)+filename, 'r') as file:
-        pacientes=json.load(file)
-    return pacientes
-
-# guarda los datos modificados como diccionario en el archivo.
-# nota: primero leer el archivo para modificarlo
-# la funcion sobreescribe todo el archivo
-def actualizar_archivo(filename, data, settings):
-    with open(str(settings.BASE_DIR)+filename, 'w') as file:
-        json.dump(data, file)
-
-# traigo solo la información que necesito mostrar
-# y retorno un diccionario
-def leer_pacientes(filename, settings):
-    with open(str(settings.BASE_DIR)+filename, 'r') as file:
-        pacientes=json.load(file)
-
-    lista_pacientes= []
+    def get(self, request):
+        registros = Usuarios.objects.all().values()
+        datos = DatosPersonales.objects.select_related('id_usuario').all().values()
+        data = Usuarios.objects.all().values()
+        context = {'form': self.form_class, 'registros': datos }
+        return render(request, self.template_name, context=context)
     
-    for elemento in pacientes['pacientes']:
-        for clave, value in elemento.items(): 
-            datos = {}
-            datos['run'] = clave
-            datos.update(elemento[clave]['datos_personales'])
-            datos.update(elemento[clave]['datos_personales'])
-            lista_pacientes.append(datos)
-    return lista_pacientes
-
-# agrega un paciente al archivo seteando todo el diccionario de
-# datos.
-def agregar_paciente(filename, form_data, settings):
-    form_data['fecha_nacimiento']=form_data['fecha_nacimiento'].strftime("%d-%m-%Y")
-
-    run = form_data['run']
-    datos_personales = {}
-    datos_personales['nombre'] = form_data['nombre']
-    datos_personales['apellido'] = form_data['apellido']
-    datos_personales['edad'] = ''
-    datos_personales['f_nacimiento'] = form_data['fecha_nacimiento']
-
-    data ={}
-    data[run] = {}
-    data[run]['datos_personales'] = datos_personales
-    data[run]['datos_contacto'] = {}
-    data[run]['password'] = "12345"
-    data[run]['examenes'] = {}
-    data[run]['examenes']['Hemograma'] = []
-    data[run]['examenes']['perfil_lipidico'] = []
-    data[run]['examenes']['perfil_bioquimico'] = []
-    data[run]['examenes']['presion_arterial'] = []
-    data[run]['medicamentos'] = {}
-    data[run]['medicamentos']['recetas'] = []
-    
-
-    archivo = leer_archivo(filename, settings)
-    archivo['pacientes'].append(data)
-
-    actualizar_archivo(filename, archivo, settings)
-    
-
-def registro(request):
-    if request.method == 'POST':
-        data_post = RegistroPaciente(request.POST)
+    def post(self, request):
+        data_post = self.form_class(request.POST)
         if data_post.is_valid():
             data_post = data_post.cleaned_data
-            agregar_paciente(filename, data_post, settings)
-
-            pacientes = leer_pacientes(filename, settings)
-            page = request.GET.get('page', 1)
-
-            paginator = Paginator(pacientes, 5)
             try:
-                users = paginator.page(page)
-            except PageNotAnInteger:
-                users = paginator.page(1)
-            except EmptyPage:
-                users = paginator.page(paginator.num_pages)
-            formulario = RegistroPaciente()
-            context = {'form': formulario, 'registros': users }
-            print("PACIENTE AGREGADO")
-            return render(request, 'app_admin/registro.html', context=context)
+                usuario_nuevo = Usuarios.objects.create(
+                    usuario=data_post['run'],
+                    contraseña='12345'
+                )
+            except IntegrityError as e:
+                messages.warning(request,"Error, El rut ya se encuentra registrado")
+                return redirect(self.success_url)
+
+            DatosPersonales.objects.create(
+                id_usuario=usuario_nuevo,
+                nombre = data_post['nombre'],
+                apellido_paterno = data_post['apellido_paterno'],
+                apellido_materno = data_post['apellido_materno'],
+            )
+            messages.success(request,'Usuario Creado')
+            return redirect(self.success_url)
         else:
-            print('NO ES VALIDO')
-            pacientes = leer_pacientes(filename, settings)
-            page = request.GET.get('page', 1)
-
-            paginator = Paginator(pacientes, 5)
-            try:
-                users = paginator.page(page)
-            except PageNotAnInteger:
-                users = paginator.page(1)
-            except EmptyPage:
-                users = paginator.page(paginator.num_pages)
-            context = {'form': data_post, 'registros': users }
-            return render(request, 'app_admin/registro.html', context)
-    else:
-        pacientes = leer_pacientes(filename, settings)
-        page = request.GET.get('page', 1)
-
-        paginator = Paginator(pacientes, 5)
-        try:
-            registros = paginator.page(page)
-        except PageNotAnInteger:
-            registros = paginator.page(1)
-        except EmptyPage:
-            registros = paginator.page(paginator.num_pages)
-
-        print("CREANDO FORMULARIO")
-        formulario = RegistroPaciente()
-        context = {'form': formulario, 'registros': registros }
-        return render(request, 'app_admin/registro.html', context=context)
+            datos = DatosPersonales.objects.select_related('id_usuario').all().values()
+            context = {'form': data_post, 'registros': datos }
+            return render(request, self.template_name, context=context)
 
 
-def eliminar(request, run):
-    print('ELIMINANDO -> {}'.format(run))
-    pacientes = leer_archivo(filename, settings)
-    for i, elemento in enumerate(pacientes['pacientes']):
-        for clave, valor in elemento.items():
-            if clave == run:
-                pacientes['pacientes'].pop(i)
+class Editar(UpdateView):
+    model = DatosPersonales
+    form_class = EditarUsuarioForm
+    template_name = 'app_admin/edit.html'
+    success_url = reverse_lazy('app_admin:registro')
 
-    actualizar_archivo(filename, pacientes, settings)
-    
-    return redirect('app_admin:registro')
+
+class BorrarUsuario(DeleteView):
+    model = DatosPersonales
+    template_name = "app_admin/delete.html"
+    success_url = reverse_lazy('app_admin:registro')
+
+    def delete(self, request, *args, **kwargs):
+        id_user = self.kwargs['pk']
+        user = DatosPersonales.objects.select_related('id').filter(id=id_user).values_list()[0]
+        Usuarios.objects.get(usuario=user[1]).delete()
+        return redirect(self.success_url)
+
+

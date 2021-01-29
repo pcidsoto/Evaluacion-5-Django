@@ -1,11 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base_medicamentos.html'%}
+
+{% load static %}
+
+    {% block titulo %}Medicamentos de Pacientes{% endblock %}
+
+    {%block nav-bar %}
+    {{block.super}}
+    {% endblock %}
     
-</body>
-</html>
+    {% block sidebar %}
+    {{ block.super }}
+    {% endblock %}
+    
+    {% block medicamento %}
+    <div>
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-success"  type="submit" value="Agregar" > 
+        </form>
+    </div>
+    {% endblock %}
+
+
+   {% block footer %}  
+   {{block.super}} 
+   {% endblock %}
