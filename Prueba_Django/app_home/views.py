@@ -11,11 +11,13 @@ class Home(View):
     form_class = Pacientes
     success_url = 'app_home:Home'
 
+
     def get(self, request):
         pacientes = self.form_class
         #print(DatosPersonales.objects.select_related('id_usuario').all().values_list('id_usuario', 'id_usuario'))
         context = {'pacientes':pacientes }
-        return render(request, self.template_name, context)       
+        return render(request, self.template_name, context)  
+
 
     def post(self, request):
         run = request.POST['pacientes'] 
@@ -25,6 +27,11 @@ class Home(View):
         context = {'pacientes':pacientes, 'datos_paciente': datos_paciente}
         return render(request, 'app_home/home.html', context)
 
+#editar pacientes
+
+
+    def editar_paciente(request, id):
+        paciente= DatosPersonales.objects.get(id=id)     
 
 
 '''filename = '/data/data_registros.json'
