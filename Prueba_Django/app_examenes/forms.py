@@ -41,18 +41,12 @@ class PerfilLipidicoForm(forms.ModelForm):
         widgets = {
                 'id_usuario': forms.Select(attrs={'class':'form-control'}),
                 'fecha': forms.DateInput(attrs={'class': 'form-control','type':'date'}),
-                'hematocrito': forms.NumberInput(attrs={'class': 'form-control'}),
-                'hemoglobina': forms.NumberInput(attrs={'class': 'form-control'}),
-                'rcto_eritrocitos': forms.NumberInput(attrs={'class': 'form-control'}),
-                'rcto_leucocitos': forms.NumberInput(attrs={'class': 'form-control'}),
-                'rcto_plaquetas': forms.NumberInput(attrs={'class': 'form-control'}),
-                'v_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
-                'h_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
-                'c_h_c_m': forms.NumberInput(attrs={'class': 'form-control'}),
-                'r_d_w_c_v': forms.NumberInput(attrs={'class': 'form-control'}),
-                'serie_roja': forms.TextInput(attrs={'class': 'form-control'}),
-                'serie_blanca': forms.TextInput(attrs={'class': 'form-control'}),
-                'plaquetas': forms.TextInput(attrs={'class': 'form-control'}),
+                'glicemia': forms.NumberInput(attrs={'class': 'form-control'}),
+                'hdl_colesterol': forms.NumberInput(attrs={'class': 'form-control'}),
+                'ldl_colesterol': forms.NumberInput(attrs={'class': 'form-control'}),
+                'colesterol_total': forms.NumberInput(attrs={'class': 'form-control'}),
+                'trigliceridos': forms.NumberInput(attrs={'class': 'form-control'}),
+                'colesterol_total_hdl': forms.NumberInput(attrs={'class': 'form-control'}),
                 }
         fields = '__all__'
 

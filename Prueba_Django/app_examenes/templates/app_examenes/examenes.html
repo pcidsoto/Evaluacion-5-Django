@@ -15,7 +15,7 @@
             {{ seleccionar }} 
             <input type = "submit" value = "Ver" class="btn btn-primary btn-sm"> 
         </form> 
-        <h3 class="card-header"> Paciente:{{hemograma.0.id_usuario_id}}</h3>
+        <h3 class="card-header"> Pacientes:{{hemograma.0.id_usuario_id}}</h3>
         <div class="card-body">
         </div>
         <div id="agregar_examenes">
@@ -24,14 +24,10 @@
                     {% if hemograma %}
                     <a href="{% url 'app_examenes:add_hemo' pk=hemograma.0.id_usuario_id %}" type="submit" class="btn btn-primary btn-sm">Agregar Hemograma</a>
                     {% endif %}
-                    {% if perfil_lipidico %}
-                    <a href="{% url 'app_examenes:add_plip' pk=perfil_lipidico.0.id_usuario_id %}" type="submit" class="btn btn-primary btn-sm">Agregar Perfil Lipidico</a>
-                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}
 {% block graficos %}
     <nav>
@@ -70,7 +66,7 @@
                                 {% for valor in hemograma %}         
                                 <tbody id="tabla_hemograma">
                                     <tr>
-                                        <td>{{valor.fecha}}</td>
+                                        <td>{{valor.fechas}}</td>
                                         <td>{{valor.hematocrito}}</td>
                                         <td>{{valor.hemoglobina}}</td>
                                         <td>{{valor.rcto_eritrocitos}}</td>
@@ -187,30 +183,37 @@ Highcharts.chart('container-hemograma', {
             <div class="table-responsive">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <table class="table table-bordered">
+                        <div class="col-lg-12">
+                            <table class="table-sm table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>Colesterol</th>
-                                        <th>Bilirrubina</th>
+                                        <th>Glicemia</th>
+                                        <th>HDL Colesterol</th>
+                                        <th>LDL Colesterol</th>
+                                        <th>Colesterol Total</th>
+                                        <th>Trigliceridos</th>
+                                        <th>Colesterol Total HDL</th>
                                     </tr>
                                 </thead>
-                                {% for elemento in perfil_lipidico %}
-                                {% for clave, valor in elemento.items %}                    
+                                {% for valor in perfil_lipidico %}         
                                 <tbody id="tabla_plipidico">
                                     <tr>
-                                        <td>{{clave}}</td>
-                                        <td>{{valor.Colesterol}}</td>
-                                        <td>{{valor.Bilirrubina}}</td>
+                                        <td>{{valor.fecha}}</td>
+                                        <td>{{valor.glicemia}}</td>
+                                        <td>{{valor.hdl_colesterol}}</td>
+                                        <td>{{valor.ldl_colesterol}}</td>
+                                        <td>{{valor.colesterol_total}}</td>
+                                        <td>{{valor.trigliceridos}}</td>
+                                        <td>{{valor.colesterol_total_hdl}}</td>
                                     </tr>
-                                    {% endfor %}
                                     {% endfor %}    
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <figure class="highcharts-figure">
+                                <br>
                                 <div id="container-plipidico"></div>
                             </figure>
                                                     </div>
@@ -220,25 +223,25 @@ Highcharts.chart('container-plipidico', {
         type: 'column'
     },
     title: {
-        text: 'Serie de tiempo Perfil lipidico'
+        text: 'Serie de tiempo perfil lipidico'
     },
     subtitle: {
         text: 'Source: Clinica'
     },
     xAxis: {
-        categories:  {{plipidico_grafico.fechas|safe}},
+        categories:{{ grafico.fechas|safe }},
         crosshair: true
     },
     yAxis: {
         min: 0,
         title: {
-            text: 'ml'
+            text: ''
         }
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -250,14 +253,34 @@ Highcharts.chart('container-plipidico', {
         }
     },
     series: [{
-        name: 'Colesterol',
-        data: {{ plipidico_grafico.colesterol }}
+        name: 'Glicemia',
+        data: {{ grafico.glicemia|safe }}
 
     }, {
-        name: 'Bilirrubina',
-        data: {{ plipidico_grafico.bilirrubina }}
+        name: 'Hdl_colesterol',
+        data: {{ grafico.hdl_colesterol|safe }} 
+    }, 
+    {
+        name: 'Ldl_colesterol',
+        data: {{ grafico.ldl_colesterol|safe }}
 
-    }]
+    },
+    {
+        name: 'Colesterol total',
+        data: {{ grafico.colesterol_total|safe }}
+
+    },
+    {
+        name: 'Trigliceridos',
+        data: {{ grafico.trigliceridos|safe }}
+
+    },
+    {
+        name: 'Colestero Total HDL',
+        data: {{ grafico.colesterol_total_hdl|safe }}
+
+    },
+]
 });
                         </script>
                     </div>
@@ -265,6 +288,7 @@ Highcharts.chart('container-plipidico', {
                 <!---->
             </div>
         </div>
+        <!--PERFIL BIOQUIMICO-->
         <div class="tab-pane fade" id="nav-pbioquimico" role="tabpanel" aria-labelledby="nav-pbioquimico-tab">
             <!---->
             <div class="table-responsive">
