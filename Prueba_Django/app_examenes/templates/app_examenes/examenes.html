@@ -15,17 +15,8 @@
             {{ seleccionar }} 
             <input type = "submit" value = "Ver" class="btn btn-primary btn-sm"> 
         </form> 
-        <h3 class="card-header"> Pacientes:{{hemograma.0.id_usuario_id}}</h3>
+        <h3 class="card-header"> Paciente:{{hemograma.0.id_usuario_id}}</h3>
         <div class="card-body">
-        </div>
-        <div id="agregar_examenes">
-            <div class="row" style="padding-bottom: 1em;">
-                <div class="col-md-3">
-                    {% if hemograma %}
-                    <a href="{% url 'app_examenes:add_hemo' pk=hemograma.0.id_usuario_id %}" type="submit" class="btn btn-primary btn-sm">Agregar Hemograma</a>
-                    {% endif %}
-                </div>
-            </div>
         </div>
     </div>
 {% endblock %}
@@ -41,6 +32,17 @@
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-hemograma" role="tabpanel" aria-labelledby="nav-hemograma-tab">
             <!---->
+            <!--NUEVO-->
+            <div id="agregar_examenes">
+                <div class="row" style="padding-bottom: 1em;">
+                    <div class="col-md-3">
+                        {% if hemograma %}
+                        <a href="{% url 'app_examenes:add_hemo' pk=hemograma.0.id_usuario_id %}" type="submit" class="btn btn-primary btn-sm">Agregar Hemograma</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!--FIN NUEVO-->
             <div class="table-responsive">
                 <div class="card-body">
                     <div class="row">
@@ -180,6 +182,17 @@ Highcharts.chart('container-hemograma', {
         </div>
         <div class="tab-pane fade" id="nav-plipidico" role="tabpanel" aria-labelledby="nav-plipidico-tab">
             <!---->
+            <!--NUEVO-->
+            <div id="agregar_examenes1">
+                <div class="row" style="padding-bottom: 1em;">
+                    <div class="col-md-3">
+                        {% if perfil_lipidico %}
+                        <a href="{% url 'app_examenes:add_plip' pk=perfil_lipidico.0.id_usuario_id %}" type="submit" class="btn btn-primary btn-sm">Agregar Perfil Lipidico</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!--FIN NUEVO-->
             <div class="table-responsive">
                 <div class="card-body">
                     <div class="row">
@@ -291,6 +304,17 @@ Highcharts.chart('container-plipidico', {
         <!--PERFIL BIOQUIMICO-->
         <div class="tab-pane fade" id="nav-pbioquimico" role="tabpanel" aria-labelledby="nav-pbioquimico-tab">
             <!---->
+            <!--NUEVO-->
+            <div id="agregar_examenes1">
+                <div class="row" style="padding-bottom: 1em;">
+                    <div class="col-md-3">
+                        {% if perfil_bioquimico %}
+                        <a href="{% url 'app_examenes:add_perfilbioquimico' pk=perfil_bioquimico.0.id_usuario_id %}" type="submit" class="btn btn-primary btn-sm">Agregar Perfil Bioquimico</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!--FIN NUEVO-->
             <div class="table-responsive">
                 <div class="card-body">
                     <div class="row">
@@ -299,19 +323,45 @@ Highcharts.chart('container-plipidico', {
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>PTD</th>
-                                        <th>TBR</th>
+                                        <th>Glucosa</th>
+                                        <th>Nitrogeno Ureico</th>
+                                        <th>Urea</th>
+                                        <th>Acido Urico</th>
+                                        <th>Colesterol Total</th>
+                                        <th>Proteinas totales</th>
+                                        <th>Albumina</th>
+                                        <th>Globulina</th>
+                                        <th>Biliburrina total</th>
+                                        <th>Transaminasa gpt alt</th>
+                                        <th>Transaminasa Got Ast</th>
+                                        <th>G glutamiltransferasa</th>
+                                        <th>Deshidrogenasa lactica</th>
+                                        <th>Fosfatasas alcalinas</th>
+                                        <th>Calcio</th>
+                                        <th>Fosforo</th>
                                     </tr>
                                 </thead>
-                                {% for elemento in perfil_bioquimico %}
-                                {% for clave, valor in elemento.items %}                    
+                                {% for valor in perfil_bioquimico %}                          
                                 <tbody id="tabla_pbioquimico">
                                     <tr>
-                                        <td>{{clave}}</td>
-                                        <td>{{valor.PTD}}</td>
-                                        <td>{{valor.TBR}}</td>
+                                        <td>{{valor.fecha}}</td>
+                                        <td>{{valor.glucosa}}</td>
+                                        <td>{{valor.nitrogeno_ureico}}</td>
+                                        <td>{{valor.urea}}</td>
+                                        <td>{{valor.acido_urico}}</td>
+                                        <td>{{valor.colesterol_total}}</td>
+                                        <td>{{valor.proteinas_totales}}</td>
+                                        <td>{{valor.albumina}}</td>
+                                        <td>{{valor.globulina}}</td>
+                                        <td>{{valor.bilirrubina_total}}</td>
+                                        <td>{{valor.transaminasa_gpt_alt}}</td>
+                                        <td>{{valor.transaminasa_got_ast}}</td>
+                                        <td>{{valor.g_glutamiltransferasa}}</td>
+                                        <td>{{valor.deshidrogenasa_lactica}}</td>                                        <td>{{valor.globulina}}</td>
+                                        <td>{{valor.fosfatasas_alcalinas}}</td>
+                                        <td>{{valor.calcio}}</td>                                        <td>{{valor.globulina}}</td>
+                                        <td>{{valor.fosforo}}</td>
                                     </tr>
-                                    {% endfor %}
                                     {% endfor %}    
                                 </tbody>
                             </table>
@@ -374,6 +424,17 @@ Highcharts.chart('container-pbioquimico', {
         </div>
         <div class="tab-pane fade" id="nav-parterial" role="tabpanel" aria-labelledby="nav-parterial-tab">
             <!---->
+            <!--NUEVO-->
+            <div id="agregar_examenes_parterial">
+                <div class="row" style="padding-bottom: 1em;">
+                    <div class="col-md-3">
+                        {% if presionarterial %}
+                        <a href="{% url 'app_examenes:add_presionarterial' pk=presionarterial.0.id_usuario_id %}" type="submit" class="btn btn-primary btn-sm">Agregar Presion arterial</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!--FIN NUEVO-->
             <div class="table-responsive">
                 <div class="card-body">
                     <div class="row">
@@ -382,19 +443,21 @@ Highcharts.chart('container-pbioquimico', {
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>Frecuencia mañana</th>
-                                        <th>Frecuencia noche</th>
+                                        <th>Presion diatolica mañana</th>
+                                        <th>Presion sistolica mañana</th>
+                                        <th>Presion diatolica tarde</th>
+                                        <th>Presion sistolica tarde</th>
                                     </tr>
                                 </thead>
-                                {% for elemento in presion_arterial %}
-                                {% for clave, valor in elemento.items %}                    
-                                <tbody id="tabla_parterial">
+                                {% for valor in presionarterial %}         
+                                <tbody id="tabla_presionarterial">
                                     <tr>
-                                        <td>{{clave}}</td>
-                                        <td>{{valor.F_manana}}</td>
-                                        <td>{{valor.F_tarde}}</td>
+                                        <td>{{valor.fecha}}</td>
+                                        <td>{{valor.presion_diatolica_mañana}}</td>
+                                        <td>{{valor.presion_sistolica_mañana}}</td>
+                                        <td>{{valor.presion_diatolica_tarde}}</td>
+                                        <td>{{valor.presion_sistolica_tarde}}</td>
                                     </tr>
-                                    {% endfor %}
                                     {% endfor %}    
                                 </tbody>
                             </table>

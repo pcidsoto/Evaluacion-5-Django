@@ -1,0 +1,126 @@
+{% extends 'base_examenes.html' %}
+{% load static %}
+
+{% block titulo %}Examenes{% endblock %}
+
+{% block navbar %} {{block.super}} {% endblock%}
+{% block sidebar %} {{block.super }} {% endblock%}
+
+
+{% block encabezado-principal %}
+    <!-- Aqui va tu codigo -->
+   <div>
+       <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {{pk}}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form.id_usuario.label_tag }}
+                    {{ form.id_usuario }}
+                    {{ form.id_usuario.errors|linebreaks }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.fecha.label_tag }}
+                    {{ form.fecha }}
+                    {{ form.fecha.errors|linebreaks }}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form.glucosa.label_tag }}
+                    {{ form.glucosa }}
+                    {{ form.glucosa.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.fosforo.label_tag }}
+                    {{ form.fosforo }}
+                    {{ form.fosforo.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.urea.label_tag }}
+                    {{ form.urea }}
+                    {{ form.urea.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.acido_urico.label_tag }}
+                    {{ form.acido_urico }}
+                    {{ form.acido_urico.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.colesterol_total.label_tag }}
+                    {{ form.colesterol_total }}
+                    {{ form.colesterol_total.errors|linebreaks }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form.calcio.label_tag }}
+                    {{ form.calcio }}
+                    {{ form.calcio.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.albumina.label_tag }}
+                    {{ form.albumina }}
+                    {{ form.albumina.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.globulina.label_tag }}
+                    {{ form.globulina }}
+                    {{ form.globulina.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.bilirrubina_total.label_tag }}
+                    {{ form.bilirrubina_total }}
+                    {{ form.bilirrubina_total.errors|linebreaks }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.transaminasa_gpt_alt.label_tag }}
+                    {{ form.transaminasa_gpt_alt }}
+                    {{ form.transaminasa_gpt_alt.errors|linebreaks }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form.g_glutamiltransferasa.label_tag }}
+                    {{ form.g_glutamiltransferasa }}
+                    {{ form.g_glutamiltransferasa.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.deshidrogenasa_lactica.label_tag }}
+                    {{ form.deshidrogenasa_lactica }}
+                    {{ form.deshidrogenasa_lactica.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.fosfatasas_alcalinas.label_tag }}
+                    {{ form.fosfatasas_alcalinas }}
+                    {{ form.fosfatasas_alcalinas.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.proteinas_totales.label_tag }}
+                    {{ form.proteinas_totales }}
+                    {{ form.proteinas_totales.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.nitrogeno_ureico.label_tag }}
+                    {{ form.nitrogeno_ureico }}
+                    {{ form.nitrogeno_ureico.errors|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.transaminasa_got_ast.label_tag }}
+                    {{ form.transaminasa_got_ast }}
+                    {{ form.transaminasa_got_ast.errors|linebreaks }}
+                </div>
+            </div>
+
+            <br>
+            <input class="btn btn-success"  type="submit" value="Agregar" > 
+        </div>
+    </form>
+   </div>
+
+{% endblock %}
+
+
+{% block footer %} {{block.super}} {% endblock %}
