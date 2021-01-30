@@ -10,8 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="{% static 'css/style_2.css' %}">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'app_principal/style.css' %}">
 </head>
 <body>
     
@@ -20,14 +19,7 @@
     <div class="container-fluid bg-principal" id="principal">
         {% block principal %} {% endblock %}
     </div>
-    
-    <div class="container-fluid bg-light" id="competencias">
-        {% block competencias %} {% endblock %}
-    </div>
-
-    <div class="container-fluid bg-dark" id="contacto">
-        {% block contacto %} {% endblock %}
-    </div>
+  
 
     <footer class="footer bg-dark text-center">
         {% block footer %}{% endblock %}

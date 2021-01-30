@@ -19,25 +19,7 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
 
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                    aria-expanded="false">
-                    Login <span class="caret"></span>
-                </a>
-                <div class="dropdown-menu">
-                    <form class="p-3" action=""  method="post">
-                        {% csrf_token %}
-                        {{ msg }}
-                        {{login_form.as_table}}
-                        <br>
-                        <input class="btn btn-primary btn-block" type="submit" value="Entrar">
-                    </form>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'app_admin:login' %}">Acceso Administrador</a>
-                </div>
-                <div class="dropdown-menu dropdown-menu-right">
-                </div>
-            </li>
+            
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
@@ -52,13 +34,30 @@
 
 {% block principal%}
 <!-- Section: Principal -->
-<div class="row">
-    <div class="col-sm-12">
-        <div class="jumbotron jumbotron-main">
-            <h2>SINARS</h2>
-            <h3>sistema de registro nacional de datos de salud de Chile</h3>
-        </div>
+
+{% if messages %}
+        {% for mensaje in messages %}
+        <div class="alert alert-{{mensaje.tags}} alert-dismissible fade show" role="alert">
+            <strong>{{mensaje}}</strong> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+    {% endif %}
+<div class="row justify-content-center">
+
+    <div class="mt-5">
+        <form action=""  method="post" >
+            {% csrf_token %}
+            {{form}}
+            <br>
+            <input class="btn btn-primary btn-block" type="submit" value="Entrar">
+        </form>
+        <br>
+        <a class="btn btn-primary btn-block" href="{% url 'app_admin:login' %}">Acceso Administrador</a>
     </div>
+    
 </div>
 
 <!-- Section: Principal -->
@@ -67,48 +66,6 @@
 <!-- End Section: Principal -->
 {% endblock %}
 
-{% block competencias %}
-
-<div class="row">
-    <h2>Noticias de Interés</h2>
-</div>
-<div class="row">
-    {% for elemento in noticias %}
-        {% for clave, valor in elemento.items %}
-        <div class="col-md-6 col-lg-3" style="background-color: whitesmoke;">
-            <div class="card">
-                <h2 class="card-header">{{valor.titulo}}</h2>
-                <div class="card-body">
-                    <h3 class="card-title">{{valor.subtitulo}}</h3>
-                    <p class="card-text">{{valor.contenido}}</p>
-                    <a href="#!" class="btn btn-dark">Ver mas</a>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    {% endfor %}
-</div>
-
-    {% endblock %}
-
-    {% block contacto %}
-
-    <!-- Section: Contacto -->
-    <div class="row">
-        <h2>Enlaces de Interés</h2>
-    </div>
-    <div class="row">
-        {% for enlace in enlaces %}
-            <div class="col-sm-3">
-                <a class="d-block" href='{{enlace.enlace}}'>
-                    <img class="img-fluid rounded d-block m-l-none" src="{% static enlace.logo %}"  alt="registro" >
-                </a>
-            </div>
-        {% endfor %}
-    </div>
-    <!-- End Section: Contacto -->
-
-    {% endblock %}
 
     {% block footer %}
 

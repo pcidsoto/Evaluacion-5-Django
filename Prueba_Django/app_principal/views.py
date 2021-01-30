@@ -3,8 +3,48 @@ from django.conf import settings
 from .forms import LoginForm
 import json
 
+from app_admin.models import Usuarios
+from django.urls import reverse_lazy
+from django.views.generic import View
+from django.contrib import messages
+
+class Login(View):
+    form_class = LoginForm
+    template_name = "app_principal/index.html"
+    success_url = 'app_home:Home' #revisar al momento de hacer el merge
+
+    def get(self, request):
+        formulario = self.form_class
+        context = {'form': formulario}
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        formulario = self.form_class(request.POST)
+        
+        if formulario.is_valid():
+            form_data = formulario.cleaned_data
+            login_user = Usuarios.objects.filter(usuario=form_data['user']).values_list()
+            print(login_user)
+            if login_user:
+                return redirect(self.success_url)
+            else:
+                messages.warning(request, 'Usuario o Contraseña Incorrecta')
+                context = {'form': formulario}
+                return render(request, self.template_name, context)
+        else:
+            print('no valido')
+            messages.success(request, 'Usuario o Contraseña Incorrecta')
+            context = {'form': formulario}
+            return render(request, self.template_name, context)
 
 
+
+
+
+
+
+
+'''
 filename_pacientes = '/data/data_registros.json'
 filename_noticias = '/data/data_noticias.json'
 
@@ -59,4 +99,4 @@ def principal(request):
             {'logo':'/app_principal/logo-fonasa.png','enlace':'https://www.fonasa.cl/sites/fonasa/inicio'}
         ]
         context ={'noticias':noticias['noticias'],'enlaces':enlaces, 'login_form':login_form}
-        return render(request, 'app_principal/index.html', context)
+        return render(request, 'app_principal/index.html', context)'''

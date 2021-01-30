@@ -1,7 +1,7 @@
 from django import forms
+from app_admin.models import Usuarios
 
 class LoginForm(forms.Form):
-
     user = forms.CharField(
         label = 'Usuario',
         widget= forms.TextInput(attrs={
