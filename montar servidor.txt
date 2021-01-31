@@ -1,0 +1,6 @@
+Servidor Apache HTTP, lo escogemos por ser de codico abierto y que puede instalarse en casi todos los sistemas operatuvos.
+El primer paso es instalar apache y mod_wsgi.
+Habilitamos el módulo wsgi y reiniciamos el Apache
+Creamos el directorio de nuestro proyecto Django, en este caso lo colocaremos en /opt/mi_proyecto.
+Creamos el archivo en el que incluiremos la configuración de nuestro virtualhost, si su versión de apache es actual, el fichero debe terminar con extencion .conf.
+Activamos el virtualhost
