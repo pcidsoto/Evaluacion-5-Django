@@ -1,0 +1,36 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block titulo %}Registro de Pacientes {% endblock %}
+
+{% block nav-bar %} 
+    {{block.super}}
+    {% block nav-link-left %}
+    <!-- 
+        <li class="nav-link"> LINK2 </li>
+    -->
+    {% endblock %}
+{% endblock %}
+
+{% block contenido %} 
+
+<div class="d-flex justify-content-around">    
+   
+    <div class="col-sm-4">
+        <form action="{% url 'app_admin:editar' object.id %}"  method="post">
+            {% csrf_token %}
+            
+            {{form.as_table}}
+            <br>
+            <input class="btn btn-primary btn-block" type="submit" value="Actualizar">
+            
+        </form>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+    {{block.super}}
+{% endblock %}
