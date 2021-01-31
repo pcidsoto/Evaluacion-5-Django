@@ -39,21 +39,18 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h3 class="card-title">{{datos.nombre}} {{datos.apellido}}</h3>
+                <h3 class="card-title">{{datos_paciente.nombre}} {{datos_paciente.apellido_paterno}} {{datos_paciente.apellido_materno}}</h3>
                 <p class="h4"><small class="text-muted">RUT:</small>
-                    {{datos.run}}</p>
-                <p class="h4"><small class="text-muted">FECHA DE NACIMIENTO</small>
-                    {{datos.f_nacimiento}}</p>
-                <p class="h4"><small class="text-muted">EDAD:</small>
-                    {{datos.edad}}</p>
+                    {{datos_paciente.id_usuario_id}}</p> 
                 <br>
                 <h3 class="card-title">Datos de Contacto</h3>
                 <p class="h4"><small class="text-muted">DIRECCIÓN:</small>
-                    {{datos.direccion}}</p>
+                    {{datos_paciente.direccion}}</p>
                 <p class="h4"><small class="text-muted">EMAIL:</small>
-                    {{datos.email}}</p>
+                    {{datos_paciente.email}}</p>
                 <p class="h4"><small class="text-muted">TELÉFONO:</small>
-                    {{datos.telefono}}</p>
+                    {{datos_paciente.telefono}}</p>
+                <button style="color: blue;">Editar</button>
             </div>
         </div>
     </div>
