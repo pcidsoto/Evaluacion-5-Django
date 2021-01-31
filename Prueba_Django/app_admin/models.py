@@ -11,16 +11,6 @@ class Usuarios(models.Model):
     contraseña = models.CharField(max_length=20)
 
 
-class DatosPersonales(models.Model):
-    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=30)
-    apellido_paterno = models.CharField(max_length=30)
-    apellido_materno = models.CharField(max_length=30)
-    direccion = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50, blank=True)
-    telefono = models.CharField(max_length=12, blank=True)
-
-
 class Hemograma(models.Model):
     id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
     fecha = models.DateField()
@@ -110,4 +100,13 @@ class Medicamento(models.Model):
     nombre = models.CharField(max_length=30)
     hora = models.TimeField()
     dosis = models.CharField(max_length=30)
-    
+
+
+class DatosPersonales(models.Model):
+    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=31)
+    apellido_paterno = models.CharField(max_length=30)
+    apellido_materno = models.CharField(max_length=30)
+    direccion = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50, blank=True)
+    telefono = models.CharField(max_length=12, blank=True)
