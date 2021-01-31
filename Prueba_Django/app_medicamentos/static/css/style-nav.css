@@ -13,10 +13,9 @@ body {
   /*
    * Sidebar
    */
-  .bg-custom {
-    background-color: black;
+  
     
-}
+
 
   .sidebar {
     position: fixed;

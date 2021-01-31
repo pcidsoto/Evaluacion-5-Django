@@ -417,13 +417,70 @@
                         },
                             series: [{
                                 name: 'Glucosa',
-                                data: {{ grafico_perfilbioquimico.glucosa}}
+                                data: {{ grafico_perfilbioquimico.glucosa }}
 
-    }, {
-                                name: 'Nitrogeno Ureico',
-                                data: {{ grafico_perfilbioquimico.nitrogeno_ureico }}
+                            },{
+                                name: 'Urea',
+                                data: {{ grafico_perfilbioquimico.urea }}
 
-    }]
+                            },{
+                                name: 'Acido Urico',
+                                data: {{ grafico_perfilbioquimico.acido_urico }}
+
+                            },{
+                                name: 'Colesterol Total',
+                                data: {{ grafico_perfilbioquimico.colesterol_total }}
+
+                            },{
+                                name: 'Proteinas Totales',
+                                data: {{ grafico_perfilbioquimico.proteinas_totales }}
+
+                            },{
+                                name: 'Albumina',
+                                data: {{ grafico_perfilbioquimico.albumina }}
+
+                            },{
+                                name: 'Globulina',
+                                data: {{ grafico_perfilbioquimico.globulina }}
+
+                            },{
+                                name: 'Bilirrubina Total',
+                                data: {{ grafico_perfilbioquimico.bilirrubina_total }}
+
+                            },{
+                                name: 'Transaminasa GPT ALT',
+                                data: {{ grafico_perfilbioquimico.transaminasa_gpt_alt }}
+
+                            
+                            },{
+                                name: 'Transaminasa GOT AST',
+                                data: {{ grafico_perfilbioquimico.transaminasa_got_ast }}
+
+                            
+                            },{
+                                name: 'G glutamiltransferasa',
+                                data: {{ grafico_perfilbioquimico.g_glutamiltransferasa }}
+
+                            
+                            },{
+                                name: 'Deshidrogenasa Lactica',
+                                data: {{ grafico_perfilbioquimico.deshidrogenasa_lactica }}
+
+                            },{
+                                name: 'Fosfatasa alcalinas',
+                                data: {{ grafico_perfilbioquimico.fosfatasas_alcalinas }}
+
+                            },{
+                                name: 'Calcio',
+                                data: {{ grafico_perfilbioquimico.calcio }}
+
+                            
+                            },{
+                                name: 'Fosforo',
+                                data: {{ grafico_perfilbioquimico.fosforo }}
+
+                            }
+                        ]
 });
                     </script>
                 </div>
@@ -489,19 +546,19 @@
                                 text: 'Source: Clinica'
                             },
                             xAxis: {
-                                categories: {{ grafico_presionarterial.fecha|safe }},
+                                categories: {{ grafico_presionarterial.fecha | safe }},
                             crosshair: true
     },
                             yAxis: {
                             min: 0,
                             title: {
-                                text: 'Rainfall (mm)'
+                                text: ''
                             }
                         },
                             tooltip: {
                             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                             footerFormat: '</table>',
                             shared: true,
                             useHTML: true
@@ -516,11 +573,22 @@
                                 name: 'Presion Diastolica mañana',
                                 data: {{ grafico_presionarterial.presion_diatolica_mañana }}
 
-    }, {
+                            }, {
                                 name: 'Presion Sistolica mañana',
-                                data: {{ grafico_presionarterial.presion_sistolica_mañana}}
+                                data: {{ grafico_presionarterial.presion_sistolica_mañana }}
 
-    }]
+                            
+                            }, {
+                                name: 'Presion Diastolica tarde',
+                                data: {{ grafico_presionarterial.presion_diatolica_tarde }}
+
+                            
+                            }, {
+                                name: 'Presion Sistolica tarde',
+                                data: {{ grafico_presionarterial.presion_sistolica_tarde }}
+
+                            }
+                        ]
 });
                     </script>
                 </div>

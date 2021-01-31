@@ -24,7 +24,7 @@ class Login(View):
         if formulario.is_valid():
             form_data = formulario.cleaned_data
             login_user = Usuarios.objects.filter(usuario=form_data['user']).values_list()
-            print(login_user)
+            
             if login_user:
                 return redirect(self.success_url)
             else:
@@ -32,7 +32,6 @@ class Login(View):
                 context = {'form': formulario}
                 return render(request, self.template_name, context)
         else:
-            print('no valido')
             messages.success(request, 'Usuario o Contraseña Incorrecta')
             context = {'form': formulario}
             return render(request, self.template_name, context)

@@ -1,32 +1,12 @@
 from django import forms
 from django.conf import settings
 from app_admin.models import Usuarios, DatosPersonales
-import json 
 
-filename = '/data/data_registros.json'
 
-def leer_pacientes(filename, settings):
-    with open(str(settings.BASE_DIR)+filename, 'r') as file:
-        pacientes=json.load(file)
-    print(pacientes)
-    lista_pacientes= [('-------','--------')]
-    
-    for elemento in pacientes['pacientes']:
-        for clave in elemento.keys():
-
-            lista_pacientes.append((clave,clave))
-    return lista_pacientes
-
-users = DatosPersonales.objects.select_related('id_usuario').all().values_list('id_usuario', 'id_usuario')
-class Pacientes(forms.Form):
-    pacientes = forms.CharField(
-        label = False,
-        widget = forms.Select(choices = users, attrs={'class':'form-select'})
-    )
-
-'''class PacientesForm(forms.ModelForm):
+class PacientesForm(forms.ModelForm):
     class Meta:        
         model = DatosPersonales
+        
         fields = ['id_usuario']
 
         def __init__(self, *args, **kwargs):
@@ -34,4 +14,18 @@ class Pacientes(forms.Form):
             self.fields['id_usuario'] = forms.ModelChoiceField(
                 queryset=DatosPersonales.objects.select_related('id_usuario').all(),
                 widget=forms.Select(attrs={'class': 'form-control'}))
-            print(DatosPersonales.objects.select_related('id_usuario').all())'''
+
+
+class EditarDatosForm(forms.ModelForm):
+    class Meta:
+        model = DatosPersonales
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class':'form-control'}),
+            'apellido_paterno': forms.TextInput(attrs={'class':'form-control'}),
+            'apellido_materno': forms.TextInput(attrs={'class':'form-control'}),
+            'direccion': forms.TextInput(attrs={'class':'form-control'}),
+            'email': forms.TextInput(attrs={'class':'form-control'}),
+            'telefono': forms.TextInput(attrs={'class':'form-control'})
+        }
+        fields = ['nombre','apellido_paterno','apellido_materno','direccion',
+            'email','telefono']

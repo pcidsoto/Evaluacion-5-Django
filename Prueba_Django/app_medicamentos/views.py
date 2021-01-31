@@ -21,7 +21,6 @@ class MedicamentoView(View):
     def post(self, request):
         run = request.POST['pacientes']
         datos_paciente = Medicamento.objects.filter(id_usuario = run).values()
-        print(datos_paciente)
         pacientes = self.form_class
         context = {'pacientes':pacientes, 'datos': datos_paciente}
         return render(request, self.template_name, context)
