@@ -2,12 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+STATUS_CHOICES = (
+            (1, "PACIENTE"),
+            (2, "ADMIN"),
+            (3, "MEDICO"),
+            (4, "FAMILIAR"),
+            (5, "CUIDADOR")
+   )
+
 class DatosPersonales(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     fecha_nacimiento = models.DateField(null=True)
     direccion = models.CharField(max_length=50)
     telefono = models.CharField(max_length=12, blank=True)
-
+    rol = models.IntegerField(choices=STATUS_CHOICES , default=1)
+    
 
 class Hemograma(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
