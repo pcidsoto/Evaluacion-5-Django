@@ -1,3 +1,4 @@
+'''
 import json
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -150,4 +151,4 @@ class AgregarPresionArterial(CreateView):
     form_class = PresionArterialForm
     template_name = 'app_examenes/add_presionarterial.html'
     success_url = reverse_lazy('app_examenes:examen')
-    
+'''

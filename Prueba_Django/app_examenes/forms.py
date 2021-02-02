@@ -1,3 +1,4 @@
+'''
 from django import forms
 from django.conf import settings
 import json
@@ -91,4 +92,4 @@ class PresionArterialForm(forms.ModelForm):
 
 
 
-
+'''

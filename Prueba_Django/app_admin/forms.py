@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core import validators
-from .models import Administrador, DatosPersonales
+#from .models import Administrador, DatosPersonales
 
 
 class RegistroPaciente(forms.Form):
@@ -53,7 +53,7 @@ class LoginForm(forms.Form):
         })
     )
 
-
+'''
 class EditarUsuarioForm(forms.ModelForm):
     class Meta:
         model = DatosPersonales
@@ -66,3 +66,5 @@ class EditarUsuarioForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             }
         fields = ['nombre','apellido_paterno','apellido_materno','email','direccion','telefono']
+
+'''

@@ -1,18 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Administrador(models.Model):
-    usuario = models.CharField(primary_key = True, max_length=30)
-    contraseña = models.CharField(max_length=20)
-
-
-class Usuarios(models.Model):
-    usuario = models.CharField(primary_key = True, max_length=30)
-    contraseña = models.CharField(max_length=20)
+class DatosPersonales(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    fecha_nacimiento = models.DateField(null=True)
+    direccion = models.CharField(max_length=50)
+    telefono = models.CharField(max_length=12, blank=True)
 
 
 class Hemograma(models.Model):
-    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateField()
     hematocrito = models.DecimalField(max_digits=5, decimal_places=2)
     hemoglobina = models.DecimalField(max_digits=5, decimal_places=2)
@@ -27,8 +25,9 @@ class Hemograma(models.Model):
     serie_blanca = models.CharField(max_length=30)
     plaquetas = models.CharField(max_length=30)
     
+
 class PerfilBioquimico(models.Model):
-    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha =  models.DateField()
     glucosa = models.DecimalField(
         max_digits=5, decimal_places=2, blank = True)
@@ -65,7 +64,7 @@ class PerfilBioquimico(models.Model):
     
     
 class PerfilLipidico(models.Model):
-    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateField()
     glicemia = models.DecimalField(
         max_digits=5, decimal_places=2, blank = True)
@@ -82,31 +81,23 @@ class PerfilLipidico(models.Model):
     
     
 class PresionArterial(models.Model):
-    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateField()
-    presion_diatolica_mañana = models.DecimalField(
+    presion_diastolica_mañana = models.DecimalField(
         max_digits=5, decimal_places=2, blank = True)
     presion_sistolica_mañana = models.DecimalField(
         max_digits=5, decimal_places=2, blank = True)
-    presion_diatolica_tarde = models.DecimalField(
+    presion_diastolica_tarde = models.DecimalField(
         max_digits=5, decimal_places=2, blank = True)
     presion_sistolica_tarde = models.DecimalField(
         max_digits=5, decimal_places=2, blank = True)
     
     
 class Medicamento(models.Model):
-    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateField()
     nombre = models.CharField(max_length=30)
     hora = models.TimeField()
     dosis = models.CharField(max_length=30)
 
 
-class DatosPersonales(models.Model):
-    id_usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=31)
-    apellido_paterno = models.CharField(max_length=30)
-    apellido_materno = models.CharField(max_length=30)
-    direccion = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50, blank=True)
-    telefono = models.CharField(max_length=12, blank=True)

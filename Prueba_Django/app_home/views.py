@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.views.generic import View, ListView
-from .forms import PacientesForm, EditarDatosForm
+#from .forms import PacientesForm, EditarDatosForm
 from app_admin.models import DatosPersonales
 import json
 
-
+'''
 class Home(ListView):
     model = DatosPersonales
     form_class = PacientesForm
@@ -64,4 +64,4 @@ class EditarDatosPersonales(View):
             return redirect(self.success_url)
         else:
             print('no valido')
-            return render(request, self.template_name, {'form': formulario})
+            return render(request, self.template_name, {'form': formulario})'''

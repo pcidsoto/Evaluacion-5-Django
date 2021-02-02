@@ -1,3 +1,4 @@
+'''
 from django import forms
 from django.conf import settings
 import json
@@ -24,3 +25,4 @@ class AgregarForm(forms.ModelForm):
            'dosis': forms.TextInput(attrs={'class':'form-control'})
         }
         fields = '__all__'
+'''

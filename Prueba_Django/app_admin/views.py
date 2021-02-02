@@ -1,10 +1,11 @@
+'''
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .models import Administrador, Usuarios, DatosPersonales
+#from .models import Administrador, Usuarios, DatosPersonales
 from .forms import RegistroPaciente, LoginForm, EditarUsuarioForm
 
 
@@ -95,3 +96,4 @@ class BorrarUsuario(DeleteView):
         return redirect(self.success_url)
 
 
+'''
