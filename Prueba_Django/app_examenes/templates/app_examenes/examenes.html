@@ -10,12 +10,7 @@
 {% block encabezado-principal %}
 <!-- Aqui va tu codigo -->
 <div class="card">
-    <form method="POST">
-        {% csrf_token %}
-        {{ seleccionar }}
-        <input type="submit" value="Ver" class="btn btn-primary btn-sm">
-    </form>
-    <h3 class="card-header"> Paciente:{{hemograma.0.id_usuario_id}}</h3>
+    <h3 class="card-header"> Examenes de {{user.first_name}}</h3>
     <div class="card-body">
     </div>
 </div>
@@ -35,19 +30,6 @@
 </nav>
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-hemograma" role="tabpanel" aria-labelledby="nav-hemograma-tab">
-        <!---->
-        <!--NUEVO-->
-        <div id="agregar_examenes">
-            <div class="row" style="padding-bottom: 1em;">
-                <div class="col-md-3">
-                    {% if hemograma %}
-                    <a href="{% url 'app_examenes:add_hemo' pk=hemograma.0.id_usuario_id %}" type="submit"
-                        class="btn btn-primary btn-sm">Agregar Hemograma</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        <!--FIN NUEVO-->
         <div class="table-responsive">
             <div class="card-body">
                 <div class="row">
@@ -73,7 +55,7 @@
                             {% for valor in hemograma %}
                             <tbody id="tabla_hemograma">
                                 <tr>
-                                    <td>{{valor.fechas}}</td>
+                                    <td>{{valor.fecha}}</td>
                                     <td>{{valor.hematocrito}}</td>
                                     <td>{{valor.hemoglobina}}</td>
                                     <td>{{valor.rcto_eritrocitos}}</td>
@@ -188,16 +170,7 @@
     <div class="tab-pane fade" id="nav-plipidico" role="tabpanel" aria-labelledby="nav-plipidico-tab">
         <!---->
         <!--NUEVO-->
-        <div id="agregar_examenes1">
-            <div class="row" style="padding-bottom: 1em;">
-                <div class="col-md-3">
-                    {% if perfil_lipidico %}
-                    <a href="{% url 'app_examenes:add_plip' pk=perfil_lipidico.0.id_usuario_id %}" type="submit"
-                        class="btn btn-primary btn-sm">Agregar Perfil Lipidico</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+
         <!--FIN NUEVO-->
         <div class="table-responsive">
             <div class="card-body">
@@ -311,16 +284,6 @@
     <div class="tab-pane fade" id="nav-pbioquimico" role="tabpanel" aria-labelledby="nav-pbioquimico-tab">
         <!---->
         <!--NUEVO-->
-        <div id="agregar_examenes1">
-            <div class="row" style="padding-bottom: 1em;">
-                <div class="col-md-3">
-                    {% if perfil_bioquimico %}
-                    <a href="{% url 'app_examenes:add_perfilbioquimico' pk=perfil_bioquimico.0.id_usuario_id %}"
-                        type="submit" class="btn btn-primary btn-sm">Agregar Perfil Bioquimico</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
         <!--FIN NUEVO-->
         <div class="table-responsive">
             <div class="card-body">
@@ -491,16 +454,6 @@
     <div class="tab-pane fade" id="nav-parterial" role="tabpanel" aria-labelledby="nav-parterial-tab">
         <!---->
         <!--NUEVO-->
-        <div id="agregar_examenes_parterial">
-            <div class="row" style="padding-bottom: 1em;">
-                <div class="col-md-3">
-                    {% if presionarterial %}
-                    <a href="{% url 'app_examenes:add_presionarterial' pk=presionarterial.0.id_usuario_id %}"
-                        type="submit" class="btn btn-primary btn-sm">Agregar Presion arterial</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
         <!--FIN NUEVO-->
         <div class="table-responsive">
             <div class="card-body">
@@ -510,9 +463,9 @@
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
-                                    <th>Presion diatolica mañana</th>
+                                    <th>Presion diastolica mañana</th>
                                     <th>Presion sistolica mañana</th>
-                                    <th>Presion diatolica tarde</th>
+                                    <th>Presion diastolica tarde</th>
                                     <th>Presion sistolica tarde</th>
                                 </tr>
                             </thead>
@@ -520,9 +473,9 @@
                             <tbody id="tabla_presionarterial">
                                 <tr>
                                     <td>{{valor.fecha}}</td>
-                                    <td>{{valor.presion_diatolica_mañana}}</td>
+                                    <td>{{valor.presion_diastolica_mañana}}</td>
                                     <td>{{valor.presion_sistolica_mañana}}</td>
-                                    <td>{{valor.presion_diatolica_tarde}}</td>
+                                    <td>{{valor.presion_diastolica_tarde}}</td>
                                     <td>{{valor.presion_sistolica_tarde}}</td>
                                 </tr>
                                 {% endfor %}
@@ -571,7 +524,7 @@
                         },
                             series: [{
                                 name: 'Presion Diastolica mañana',
-                                data: {{ grafico_presionarterial.presion_diatolica_mañana }}
+                                data: {{ grafico_presionarterial.presion_diastolica_mañana }}
 
                             }, {
                                 name: 'Presion Sistolica mañana',
@@ -580,7 +533,7 @@
                             
                             }, {
                                 name: 'Presion Diastolica tarde',
-                                data: {{ grafico_presionarterial.presion_diatolica_tarde }}
+                                data: {{ grafico_presionarterial.presion_diastolica_tarde }}
 
                             
                             }, {

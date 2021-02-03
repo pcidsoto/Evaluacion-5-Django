@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} SINARS {% endblock %}
+
+{% block nav-bar %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">SINARS</a>
+
+    <!-- Navigation Bar Hamburger-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false"
+        aria-controls="navigation" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- End Navigation Bar Hamburger -->
+    <!-- Navigation Links -->
+    <div class="collapse navbar-collapse" id="navigation">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
+            <button class="btn btn-outline-success border-dark 
+                    font-weight-bold text-white my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+    </div>
+    <!-- Navigation Links -->
+</nav>
+
+{% endblock %}
+
+{% block principal%}
+
+<h1>Acceso Denegado!</h1>
+<p>
+    Puede Intentar Ingresar <a href="{% url 'login' %}">Aquí</a>.
+</p>
+<p>o</p>
+<p><a href="{% url 'app_home:Home' %}" >Volver a Home</a></p>
+
+
+{% endblock %}
+
+
+{% block footer %}
+
+<p class="text-muted">&copy; 2020 Awakelab.</p>
+<p class="text-muted">Grupo Full Stack Python</p>
+
+{% endblock %}
+
+
+{% block modals %}
+
+{% endblock%}

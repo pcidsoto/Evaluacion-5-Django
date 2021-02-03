@@ -30,7 +30,13 @@ class PresionArterialAdmin(admin.ModelAdmin):
     list_display = ('fecha', 'presion_diastolica_mañana', 'presion_sistolica_mañana', 
     'presion_diastolica_tarde', 'presion_sistolica_tarde')
 
+
+class MedicamentosAdmin(admin.ModelAdmin):
+    list_display =('fecha', 'nombre', 'hora', 'dosis')
+
 admin.site.register(DatosPersonales, DatosPersonalesAdmin)
 admin.site.register(Hemograma, HemogramaAdmin)
 admin.site.register(PerfilBioquimico, PerfilBioquimicoAdmin)
 admin.site.register(PerfilLipidico, PerfilLipidicoAdmin)
+admin.site.register(PresionArterial, PresionArterialAdmin)
+admin.site.register(Medicamento, MedicamentosAdmin)

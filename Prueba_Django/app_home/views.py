@@ -3,35 +3,30 @@ from django.conf import settings
 from django.views.generic import View, ListView
 #from .forms import PacientesForm, EditarDatosForm
 from app_admin.models import DatosPersonales
-import json
-
-'''
-class Home(ListView):
-    model = DatosPersonales
-    form_class = PacientesForm
-    template_name = 'app_home/home.html'
-    context_object_name = 'pacientes'
-    success_url = 'app_home:Home'
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
     
+ 
+
+class Home(LoginRequiredMixin,UserPassesTestMixin, View):
+    template_name = 'app_home/home.html'
+    success_url = 'app_home:Home'
+    
+    def test_func(self):
+        return self.usuario_permitido(self.request.user)
+
     def get(self, request, **kwargs):
-        pacientes = self.form_class
-        #print(DatosPersonales.objects.select_related('id_usuario').all().values_list('id_usuario', 'id_usuario'))
-        context = {'pacientes':pacientes}
-        return render(request, self.template_name, context)  
+        return render(request, self.template_name)
 
+    def usuario_permitido(self, usuario):
+        if usuario.datospersonales.rol == 2 or usuario.datospersonales.rol == 1:
+            validacion = True
+        else:
+            validacion = False
+        return validacion 
+    
 
-    def post(self, request):
-        run = request.POST['id_usuario'] 
-        datos_paciente = DatosPersonales.objects.filter(id_usuario=run).values()[0]
-        pacientes = self.form_class
-        context = {'pacientes':pacientes, 
-            'datos_paciente': datos_paciente,
-            'id':datos_paciente['id']
-            }
-        return render(request, 'app_home/home.html', context)
-
-
+'''
 class EditarDatosPersonales(View):
     model = DatosPersonales
     form_class = EditarDatosForm

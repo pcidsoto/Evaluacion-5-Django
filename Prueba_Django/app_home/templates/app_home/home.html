@@ -5,24 +5,14 @@
 
 {% block nav-bar %} 
     <nav class="navbar navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Bienvenid@: {{datos_paciente.nombre}}</a>
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Bienvenid@: {{user.first_name}}</a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
       data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
-        <a class="nav-link" href="{% url 'app_principal:principal' %}">Logout</a>
-      </li>
-    </ul>
-    
-    <ul class="navbar-nav px-3">
-      <li class="nav-item">
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{pacientes}} 
-            <input type = "submit" class="ml-2 btn btn-success btn-sm" value = "Ver"> 
-        </form>
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
       </li>
     </ul>
     
@@ -39,22 +29,21 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h3 class="card-title">{{datos_paciente.nombre}} {{datos_paciente.apellido_paterno}} {{datos_paciente.apellido_materno}}</h3>
-                <p class="h4"><small class="text-muted">RUT:</small>
-                    {{datos_paciente.id_usuario_id}}</p> 
+                <br>
+                <br>
+                <h1 class="card-title">{{user.first_name}} {{user.last_name}}</h1>
                 <br>
                 <h3 class="card-title">Datos de Contacto</h3>
                 <p class="h4"><small class="text-muted">DIRECCIÓN:</small>
-                    {{datos_paciente.direccion}}</p>
+                    {{user.datospersonales.direccion}}</p>
                 <p class="h4"><small class="text-muted">EMAIL:</small>
-                    {{datos_paciente.email}}</p>
+                    {{user.email}}</p>
                 <p class="h4"><small class="text-muted">TELÉFONO:</small>
-                    {{datos_paciente.telefono}}</p>
+                    {{user.datospersonales.telefono}}</p>
                 
             </div>
-            {% if id %}
-                <a class="btn btn-primary" href="{% url 'app_home:editar' pk=datos_paciente.id %}">Actualizar Datos</a>
-            {% endif %}
+            {{user.datospersonales.rol}}
+            
         </div>
     </div>
     </div>

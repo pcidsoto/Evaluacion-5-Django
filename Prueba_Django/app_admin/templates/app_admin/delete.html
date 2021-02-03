@@ -19,13 +19,12 @@
     <div class="col-sm-4 mt-5 mb-5">
         <form action="{% url 'app_admin:borrar' object.id %}"  method="post">
             {% csrf_token %}
-
-            Está seguro de eliminar usuario {{object.nombre}} con id = {{object.id}}? 
+            {{pk}}
+            Se eliminó el Usuario {{object}} con id:{{object.id}}!
             <br>
             <br>
             <br>
-            <input class="btn btn-danger btn-block" type="submit" value="Eliminar">
-            <input href="{% url 'app_admin:registro' %}" class="btn btn-primary btn-block" type="submit" value="Cancelar">
+            <input class="btn btn-danger btn-block" type="submit" value="ok">
             
         </form>
         

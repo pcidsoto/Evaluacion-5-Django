@@ -1,4 +1,3 @@
-'''
 import json
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -6,46 +5,76 @@ from django.conf import settings
 from app_admin.models import Hemograma, PresionArterial, PerfilBioquimico, PerfilLipidico
 from django.views.generic import View
 from django.views.generic.edit import CreateView
-from .forms import HemogramaForm, PresionArterialForm, PerfilBioquimicoForm
-from .forms import PerfilLipidicoForm 
-from .forms import PacientesFormSelect
+#from .forms import HemogramaForm, PresionArterialForm, PerfilBioquimicoForm
+#from .forms import PerfilLipidicoForm 
+#from .forms import PacientesFormSelect
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-class ExamenesView(View):
-    select_form = PacientesFormSelect
+
+def usuario_permitido(usuario):
+        if usuario.datospersonales.rol == 1:
+            validacion = True
+        else:
+            validacion = False
+        return validacion 
+
+class ExamenesView(LoginRequiredMixin,UserPassesTestMixin,View):
     template_name = 'app_examenes/examenes.html'
     succes_url = "app_examenes:examen"
 
+    def test_func(self):
+        return usuario_permitido(self.request.user)
+
     def get(self, request):
-        context = {'seleccionar': self.select_form}
-        return render(request, 'app_examenes/examenes.html', context)
-       
-    def post(self, request):
-        run = request.POST['pacientes']
+        print(self.request.user.id)
         hemograma = list(Hemograma.objects.select_related('id_usuario').\
-            filter(id_usuario=run).values())
+            filter(usuario_id=self.request.user.id).values())
+        
         perfil_lipidico = list(PerfilLipidico.objects.select_related('id_usuario').\
-            filter(id_usuario=run).values())
+            filter(usuario_id=self.request.user.id).values())
         presionarterial = list(PresionArterial.objects.select_related('id_usuario').\
-            filter(id_usuario=run).values())
+            filter(usuario_id=self.request.user.id).values())
         perfil_bioquimico = list(PerfilBioquimico.objects.select_related('id_usuario').\
-            filter(id_usuario=run).values())
+            filter(usuario_id=self.request.user.id).values())
+        
         context = {
-                "seleccionar":self.select_form,
                 "hemograma":hemograma,
                 "perfil_lipidico":perfil_lipidico,
                 "perfil_bioquimico":perfil_bioquimico,
                 "presionarterial":presionarterial,
-                "grafico_hemograma": self.get_datos_hemograma(run),
-                "grafico_perfil_lipidico": self.get_datos_perfil_lipidico(run),
-                "grafico_perfilbioquimico": self.get_datos_perfil_bioquimico(run),
-                "grafico_presionarterial": self.get_datos_presionarterial(run),
+                "grafico_hemograma": self.get_datos_hemograma(self.request.user.id),
+                "grafico_perfil_lipidico": self.get_datos_perfil_lipidico(self.request.user.id),
+                "grafico_perfilbioquimico": self.get_datos_perfil_bioquimico(self.request.user.id),
+                "grafico_presionarterial": self.get_datos_presionarterial(self.request.user.id),
                 }
+        
         return render(request, 'app_examenes/examenes.html', context)
+
+    def get_datos_hemograma(self, run):
+            #Obteniendo los datos historicos de los examenes para los graficos
+        hemo = Hemograma.objects.select_related('id_usuario').\
+            filter(usuario_id=run).\
+                values('fecha','hemoglobina','hematocrito',
+                'rcto_eritrocitos','rcto_leucocitos',
+                'v_c_m','h_c_m','c_h_c_m','r_d_w_c_v','rcto_plaquetas')
+        grafico_hemograma = {
+            'fecha':[ str(dato['fecha']) for dato in hemo],
+            'hemoglobina':[ float(dato['hemoglobina']) for dato in hemo],
+            'hematocrito':[ float(dato['hematocrito']) for dato in hemo],
+            'rcto_eritrocitos':[ float(dato['rcto_eritrocitos']) for dato in hemo],
+            'rcto_leucocitos':[ float(dato['rcto_leucocitos']) for dato in hemo],
+            'v_c_m':[ float(dato['v_c_m']) for dato in hemo],
+            'h_c_m':[ float(dato['h_c_m']) for dato in hemo],
+            'c_h_c_m':[ float(dato['c_h_c_m']) for dato in hemo],
+            'r_d_w_c_v':[ float(dato['r_d_w_c_v']) for dato in hemo],
+            'rcto_plaquetas':[ float(dato['rcto_plaquetas']) for dato in hemo],
+        } 
+        return grafico_hemograma
 
     def get_datos_hemograma(self, run):
         #Obteniendo los datos historicos de los examenes para los graficos
         hemo = Hemograma.objects.select_related('id_usuario').\
-            filter(id_usuario=run).\
+            filter(usuario_id=run).\
                 values('fecha','hemoglobina','hematocrito',
                 'rcto_eritrocitos','rcto_leucocitos',
                 'v_c_m','h_c_m','c_h_c_m','r_d_w_c_v','rcto_plaquetas')
@@ -66,7 +95,7 @@ class ExamenesView(View):
     def get_datos_perfil_lipidico(self, run):
         #Obteniendo los datos historicos de los examenes para los graficos
         perfil_lipidico = PerfilLipidico.objects.select_related('id_usuario').\
-            filter(id_usuario=run).\
+            filter(usuario_id=run).\
                 values('fecha','glicemia','hdl_colesterol',
                 'ldl_colesterol','colesterol_total',
                 'trigliceridos','colesterol_total_hdl')
@@ -84,7 +113,7 @@ class ExamenesView(View):
     def get_datos_perfil_bioquimico(self, run):
         #Obteniendo los datos historicos de los examenes para los graficos
         perfil_bioquimico = PerfilBioquimico.objects.select_related('id_usuario').\
-            filter(id_usuario=run).\
+            filter(usuario_id=run).\
                 values('fecha','glucosa','nitrogeno_ureico',
                 'urea','acido_urico',
                 'colesterol_total','proteinas_totales','albumina','globulina',
@@ -115,17 +144,20 @@ class ExamenesView(View):
     def get_datos_presionarterial(self, run):
         #Obteniendo los datos historicos de los examenes para los graficos
         presionarterial = PresionArterial.objects.select_related('id_usuario').\
-            filter(id_usuario=run).\
-                values('fecha', 'presion_diatolica_mañana', 'presion_sistolica_mañana', 'presion_diatolica_tarde', 'presion_sistolica_tarde')
+            filter(usuario_id=run).\
+                values('fecha', 'presion_diastolica_mañana', 'presion_sistolica_mañana',
+                'presion_diastolica_tarde', 'presion_sistolica_tarde')
         grafico_presionarterial = {
             'fecha':[ str(dato['fecha']) for dato in presionarterial],
-            'presion_diatolica_mañana':[ float(dato['presion_diatolica_mañana']) for dato in presionarterial],
+            'presion_diastolica_mañana':[ float(dato['presion_diastolica_mañana']) for dato in presionarterial],
             'presion_sistolica_mañana':[ float(dato['presion_sistolica_mañana']) for dato in presionarterial],
-            'presion_diatolica_tarde':[ float(dato['presion_diatolica_tarde']) for dato in presionarterial],
+            'presion_diastolica_tarde':[ float(dato['presion_diastolica_tarde']) for dato in presionarterial],
             'presion_sistolica_tarde':[ float(dato['presion_sistolica_tarde']) for dato in presionarterial]
         } 
         return grafico_presionarterial
 
+
+'''
 class AgregarHemograma(CreateView):
     model = Hemograma
     form_class = HemogramaForm

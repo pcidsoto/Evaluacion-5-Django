@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_principal',
     'app_home',
     'app_medicamentos',
     'app_admin',
@@ -141,3 +140,6 @@ STATICFILES_DIRS = [
     '/static/',
 ]
 
+LOGIN_REDIRECT_URL = '/home/home'
+
+LOGOUT_REDIRECT_URL = '/accounts/login/'

@@ -6,6 +6,6 @@ from . import views
 
 app_name='app_medicamentos'
 urlpatterns = [
-  #  path( '', views.MedicamentoView.as_view(), name='medicamentos'),
+    path( 'medicamentos/', views.MedicamentoView.as_view(), name='medicamentos'),
  #   path('agregar_medicamento/', views.AgregarMedicamento.as_view() , name='agregar_medicamento' ),
 ]

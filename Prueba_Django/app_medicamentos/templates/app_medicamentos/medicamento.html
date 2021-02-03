@@ -17,13 +17,7 @@
         <header>
             <div id="header">
                 <h3 style="text-align: center;">Medicamentos y dosis</h3>
-                <h4 style="text-align: center;">{{dato.nombre}} {{dato.apellido_paterno}}</h4>
-                            
-                <form method = "POST"> 
-                    {% csrf_token %}
-                    {{ pacientes }} 
-                    <input type = "submit" value = "Ver" class="btn btn-primary btn-sm"> 
-                </form> 
+                <h6 style="text-align: center;">{{user.first_name}} {{user.last_name}}</h6>
                 
             </div>
         </header>
@@ -53,12 +47,6 @@
                 </table>
             </div>
             <hr>
-
-            <div id="nuevo_medicamentos">
-            <!--   {{datos.0.id_usuario_id}}-->
-                <a type="submit" class="btn btn-primary" href="{% url 'app_medicamentos:agregar_medicamento' %}" >Agregar</a>
-              
-            </div>
         </div>
         <!--fin tu codigo-->
     {% endblock %}

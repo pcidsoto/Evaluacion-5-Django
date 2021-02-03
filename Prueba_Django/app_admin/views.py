@@ -1,99 +1,92 @@
-'''
+
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib import messages
-#from .models import Administrador, Usuarios, DatosPersonales
-from .forms import RegistroPaciente, LoginForm, EditarUsuarioForm
+from .models import DatosPersonales
+from django.contrib.auth.models import User 
+from .forms import RegistroPaciente, EditarUsuarioForm
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+def usuario_permitido(usuario):
+        if usuario.datospersonales.rol == 2:
+            validacion = True
+        else:
+            validacion = False
+        return validacion
 
-class Login(View):
-    form_class = LoginForm
-    template_name = "app_admin/login.html"
-    success_url = 'app_admin:registro'
-
-    def get(self, request):
-        formulario = self.form_class
-        context = {'form': formulario}
-        return render(request, self.template_name, context)
-
-    def post(self, request):
-        formulario = self.form_class(request.POST) 
-        if formulario.is_valid():
-            form_data = formulario.cleaned_data
-            login_user = Administrador.objects.filter(usuario=form_data['user']).values_list()
-            if not login_user:
-                messages.success(request, 'Usuario o Contraseña Incorrecta')
-                context = {'form': formulario}
-                return render(request, 'app_admin/login.html', context)
-
-            if form_data['user']==login_user[0][0] and form_data['password']==login_user[0][1]:
-                return redirect(self.success_url)
-            else:
-                messages.success(request, 'Usuario o Contraseña Incorrecta')
-                context = {'form': formulario}
-                return render(request, 'app_admin/login.html', context)
-
-
-class Registro(CreateView):
+class Registro(LoginRequiredMixin,UserPassesTestMixin,View):
     model = DatosPersonales
     form_class = RegistroPaciente
     template_name = 'app_admin/registro.html'
     success_url = 'app_admin:registro'
 
+    def test_func(self):
+        return usuario_permitido(self.request.user)
+
     def get(self, request):
-        registros = Usuarios.objects.all().values()
-        datos = DatosPersonales.objects.select_related('id_usuario').all().values()
-        data = Usuarios.objects.all().values()
-        context = {'form': self.form_class, 'registros': datos }
-        return render(request, self.template_name, context=context)
+        context = {
+            'pacientes':self.get_pacientes(),
+            'form':self.form_class
+        }
+        return render(request, self.template_name, context )
     
     def post(self, request):
-        data_post = self.form_class(request.POST)
-        if data_post.is_valid():
-            data_post = data_post.cleaned_data
+        formulario = self.form_class(request.POST)
+        if formulario.is_valid():
+            data_post= formulario.cleaned_data
+            print(data_post)
+            
             try:
-                usuario_nuevo = Usuarios.objects.create(
-                    usuario=data_post['run'],
-                    contraseña='12345'
+                user = User.objects.create_user(
+                    username=data_post['username'] ,email='', password='1234',
+                    first_name=data_post['nombre'], last_name=data_post['apellido']
                 )
+
             except IntegrityError as e:
-                messages.warning(request,"Error, El rut ya se encuentra registrado")
-                return redirect(self.success_url)
+                print('fallo')
+                messages.warning(request,"Error, El username ya se encuentra registrado")
+                context = {
+                    'pacientes':self.get_pacientes(),
+                    'form':formulario
+                }
+                return render(request, self.template_name, context)
 
             DatosPersonales.objects.create(
-                id_usuario=usuario_nuevo,
-                nombre = data_post['nombre'],
-                apellido_paterno = data_post['apellido_paterno'],
-                apellido_materno = data_post['apellido_materno'],
-            )
+                    usuario_id = user.id,
+                    rol=data_post['rol']
+                )
             messages.success(request,'Usuario Creado')
+
             return redirect(self.success_url)
-        else:
-            datos = DatosPersonales.objects.select_related('id_usuario').all().values()
-            context = {'form': data_post, 'registros': datos }
-            return render(request, self.template_name, context=context)
+
+    def get_pacientes(self):
+        registro = DatosPersonales.objects.filter(rol=1)
+        pacientes = []
+        for row in registro:
+            data = {}
+            user = row.usuario_id
+            dato = User.objects.get(id=user)
+            data['datos_personales'] = row
+            data['identidad'] = dato
+            #print(dir(data['identidad']))
+            pacientes.append(data)
+        return pacientes
 
 
-class Editar(UpdateView):
-    model = DatosPersonales
-    form_class = EditarUsuarioForm
-    template_name = 'app_admin/edit.html'
-    success_url = reverse_lazy('app_admin:registro')
-
-
-class BorrarUsuario(DeleteView):
-    model = DatosPersonales
+class BorrarUsuario(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+    model = User
     template_name = "app_admin/delete.html"
     success_url = reverse_lazy('app_admin:registro')
 
+    def test_func(self):
+        return usuario_permitido(self.request.user)
+
     def delete(self, request, *args, **kwargs):
         id_user = self.kwargs['pk']
-        user = DatosPersonales.objects.select_related('id').filter(id=id_user).values_list()[0]
-        Usuarios.objects.get(usuario=user[1]).delete()
+        User.objects.get(id=id_user).delete()
         return redirect(self.success_url)
 
 
-'''

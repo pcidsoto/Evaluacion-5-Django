@@ -24,13 +24,13 @@
     {% block nav-bar %} 
     
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">SINARS</a>
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Bienvenid@: {{user.first_name}}</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="{% url 'app_principal:principal' %}">Logout</a>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
         </ul>
     </nav>
@@ -42,6 +42,7 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light pt-4 sidebar collapse">
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column">
+                        {% if user.datospersonales.rol == 1 %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'app_home:Home' %}">
                                 <span data-feather="home"></span>
@@ -59,6 +60,7 @@
                                 <h4>Medicamentos</h4>
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>
