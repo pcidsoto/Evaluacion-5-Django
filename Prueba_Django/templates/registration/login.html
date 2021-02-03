@@ -35,7 +35,8 @@
 {% block principal%}
 <!-- Section: Principal -->
 
-{% if form.errors %}
+<div class="col-md-6" style="padding-top: 60px;" >
+    {% if form.errors %}
 <h4>Los datos de autenticación no corresponden. Trata nuevamente.</h4>
 {% endif %}
 
@@ -75,6 +76,7 @@
     </div>
 </form>
 
+</div>
 
 <!-- Section: Principal -->
 

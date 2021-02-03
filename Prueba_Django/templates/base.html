@@ -10,18 +10,19 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="{% static 'app_principal/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style_2.css' %}">
 </head>
 <body>
     
     {% block nav-bar %} {% endblock %}
     
-    <div class="container-fluid bg-principal" style="margin-top:100px;">
+    <div class="container-fluid bg-principal">
+        <h1 class="pt-80 text-center" >Bienvenidos</h1>
         {% block principal %} {% endblock %}
     </div>
   
 
-    <footer class="footer bg-dark text-center">
+    <footer class="footer bg-dark text-center" style="min-height: 60px;">
         {% block footer %}{% endblock %}
     </footer>
 
